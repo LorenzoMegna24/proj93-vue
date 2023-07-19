@@ -20,6 +20,7 @@
 
 <template>
     <HeaderComp></HeaderComp>
+    <router-view></router-view>
 </template>
 
 <style lang="scss">
