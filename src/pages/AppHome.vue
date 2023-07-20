@@ -12,7 +12,9 @@
 </script>
 
 <template>
-    <h1>home</h1>
+  <div class="container">
+    <h1 class="mt-5 pt-2">Welcome</h1>
+  </div>
 </template>
 
 <style lang="scss">

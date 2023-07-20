@@ -12,7 +12,7 @@
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light">
           <div class="container">
             <RouterLink class="navbar-brand" :to="{name:'home'}">Navbar</RouterLink>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"

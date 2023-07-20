@@ -23,17 +23,18 @@
 </script>
 
 <template>
-  <div class="row">
-    <div class="col-3 m-2" v-for="(elem,index) in apartments" :key="index">
-
-      <div class="card">
-        <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
-        <div class="card-body">
-          <h4 class="card-title">{{elem.title}}</h4>
-          <p class="card-text">{{elem.address}}</p>
+  <div class="container mt-5">
+    <div class="row justify-content-around pt-5">
+      <div class="col-3 m-2" v-for="(elem,index) in apartments" :key="index">
+        <div class="card">
+          <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+          <div class="card-body">
+            <h4 class="card-title">{{elem.title}}</h4>
+            <p class="card-text">{{elem.address}}</p>
+          </div>
         </div>
+  
       </div>
-
     </div>
   </div>
 </template>
