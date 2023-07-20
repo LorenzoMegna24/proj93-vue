@@ -2,20 +2,27 @@
   import axios from 'axios';
 
   export default{
-    name: 'AppHome',
+    name: 'ApartmentList',
     data(){
         return{
             apartments:[],
+            amenities:[],
             baseUrl:'http://127.0.0.1:8000'
         }
       },
       mounted(){
         this.getApartments();
+        this.getAmenities();
       },
       methods:{
         getApartments(){
           axios.get(`${this.baseUrl}/api/apartments`).then(res=>{
             this.apartments = res.data.apartments.data
+          })
+        },
+        getAmenities(){
+          axios.get(`${this.baseUrl}/api/amenities`).then(res=>{
+            this.amenities = res.data.amenities
           })
         }
       }
@@ -25,8 +32,8 @@
 <template>
   <div class="container mt-5">
     <!-- Offcanvas amenities -->
-    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-      Link with href
+    <a class="btn btn-primary mt-5" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+      Filtri
     </a>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
@@ -38,10 +45,10 @@
           <h2>Servizi</h2>
         </div>
         <div class=" mt-3">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Default checkbox
+          <div class="form-check d-flex flex-column">
+            <label class="form-check-label mb-2" v-for="(elem, index) in amenities" :key="index" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" :value="elem.id" id="">
+              <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;"> 
             </label>
           </div>
         </div>
