@@ -63,10 +63,10 @@
         <div>
           <h2>Servizi</h2>
         </div>
-        <div class=" mt-3">
-          <div class="form-check d-flex flex-column">
-            <label class="form-check-label mb-2" v-for="(elem, index) in amenities" :key="index" for="flexCheckDefault">
-            <input class="form-check-input" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
+        <div class="mt-3">
+          <div class="form-check d-flex flex-wrap">
+            <label class="form-check-label me-5 mb-2 d-flex align-items-center" v-for="(elem, index) in amenities" :key="index" for="flexCheckDefault">
+            <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
               <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;"> 
             </label>
           </div>
@@ -106,6 +106,8 @@
   </nav>
 </template>
 
-<style lang="scss">
-@use '../style/main.scss';
+<style lang="scss" scoped>
+  .form-check-input{
+    border-color: rgb(70, 68, 68);
+  }
 </style>
