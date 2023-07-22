@@ -1,37 +1,40 @@
 <script>
 import axios from 'axios';
+import MessageComp from '../components/MessageComp.vue';
 
 export default {
+  name: "SingleApartment",
 
-  name: 'SingleApartment',
+  components: {
+    MessageComp
+  },
+
   data() {
     return {
       apartment: {},
-      apiUrl: 'http://127.0.0.1:8000',
-    }
+      apiUrl: "http://127.0.0.1:8000",
+    };
   },
 
   created() {
-    this.singleApartment()
+    this.singleApartment();
   },
 
   methods: {
-
     singleApartment() {
-
       axios.get(`${this.apiUrl}/api/apartments/${this.$route.params.slug}`).then((res) => {
         if (res.data.success) {
-
           this.apartment = res.data.apartment;
-          console.log(this.apartment)
-        } else {
+          console.log(this.apartment);
+        }
+        else {
           // redirect alla pagina 404
-          this.$router.push({ name: 'not-found' })
+          this.$router.push({ name: "not-found" });
         }
       });
     }
+  },
 
-  }
 }
 
 </script>
@@ -54,28 +57,7 @@ export default {
       </div>
     </div>
 
-    <form class="p-3 my-4 w-50 border rounded-3">
-      <div class="mb-3">
-        <label for="InputName" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="InputName">
-      </div>
-
-      <div class="mb-3">
-        <label for="InputSurname" class="form-label">Cognome</label>
-        <input type="text" class="form-control" id="InputSurname">
-      </div>
-
-      <div class="mb-3">
-        <label for="InputEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp">
-      </div>
-
-      <div class="mb-3">
-        <label for="TextMessage" class="form-label">Messaggio</label>
-        <textarea class="form-control" id="TextMessage" rows="3"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Invia</button>
-    </form>
+    <MessageComp />
 
   </div>
 </template>
