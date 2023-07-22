@@ -34,9 +34,14 @@ export default {
       }
 
       axios.get(`${this.baseUrl}/api/apartments`, { params }).then(res => {
-        this.apartments = res.data.apartments.data
-        this.currentPage = res.data.apartments.current_page
-        this.lastPage = res.data.apartments.last_page
+        if (res.data.apartments) {
+          this.apartments = res.data.apartments.data
+          this.currentPage = res.data.apartments.current_page
+          this.lastPage = res.data.apartments.last_page
+        } else {
+          // Gestisci il caso in cui la risposta non contiene la proprietà apartments
+          this.apartments = []
+        }
       })
     },
     getAmenities() {
@@ -77,6 +82,9 @@ export default {
     </div>
     <!-- /Offcanvas amenities -->
     <div class="row justify-content-around pt-5">
+      <div v-if="apartments.length === 0" class="text-center my-3">
+        Non ci sono appartamenti che corrispondono ai filtri selezionati
+      </div>
       <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
         <div class="card">
           <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
@@ -90,25 +98,25 @@ export default {
 
       </div>
     </div>
+    <nav aria-label="Page navigation">
+      <ul class="pagination    ">
+        <li class="page-item">
+          <a class="page-link" @click.prevent="getProjects(currentPage - 1)" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" :class="(currentPage === elem) ? 'active' : ''" aria-current="page"
+          v-for="(elem, index) in lastPage" :key="index">
+          <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-  <nav aria-label="Page navigation">
-    <ul class="pagination    ">
-      <li class="page-item">
-        <a class="page-link" @click.prevent="getProjects(currentPage - 1)" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item" :class="(currentPage === elem) ? 'active' : ''" aria-current="page"
-        v-for="(elem, index) in lastPage" :key="index">
-        <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
 </template>
 
 <style lang="scss" scoped>
