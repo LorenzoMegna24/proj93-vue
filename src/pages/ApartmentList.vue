@@ -118,18 +118,17 @@ export default {
 
       </div>
     </div>
-    <nav aria-label="Page navigation">
-      <ul class="pagination    ">
-        <li class="page-item">
+    <nav v-if="apartments.length > 0" aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
           <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item" :class="(currentPage === elem) ? 'active' : ''" aria-current="page"
-          v-for="(elem, index) in lastPage" :key="index">
+        <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
           <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
         </li>
-        <li class="page-item">
+        <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
           <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
