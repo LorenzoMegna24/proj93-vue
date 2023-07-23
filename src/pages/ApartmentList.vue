@@ -1,4 +1,4 @@
-<script >
+<script>
 import axios from 'axios';
 
 export default {
@@ -10,23 +10,33 @@ export default {
       selectedAmenities: [],
       currentPage: 1,
       lastPage: null,
-      baseUrl: 'http://127.0.0.1:8000'
+      baseUrl: 'http://127.0.0.1:8000',
+      minRooms: null,
+      minBeds: null,
     }
   },
   mounted() {
     this.getApartments(1);
     this.getAmenities();
   },
-  watch: {
-    selectedAmenities: {
-      handler: 'getApartments',
-      deep: true,
-    }
-  },
   methods: {
-    getApartments(apartmentApiPAge) {
+    searchApartments() {
+      const offcanvasElement = document.getElementById('offcanvasExample');
+      const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement) || new bootstrap.Offcanvas(offcanvasElement);
+      offcanvas.hide();
+      this.getApartments(1); // Aggiungiamo il parametro della pagina (1) per resettare la paginazione
+    },
+    getApartments(apartmentApiPage) {
       const params = {
-        page: apartmentApiPAge
+        page: apartmentApiPage,
+      }
+
+      if (this.minRooms) {
+        params.min_rooms = this.minRooms;
+      }
+
+      if (this.minBeds) {
+        params.min_beds = this.minBeds;
       }
 
       if (this.selectedAmenities.length > 0) {
@@ -35,23 +45,23 @@ export default {
 
       axios.get(`${this.baseUrl}/api/apartments`, { params }).then(res => {
         if (res.data.apartments) {
-          this.apartments = res.data.apartments.data
-          this.currentPage = res.data.apartments.current_page
-          this.lastPage = res.data.apartments.last_page
+          this.apartments = res.data.apartments.data;
+          this.currentPage = res.data.apartments.current_page;
+          this.lastPage = res.data.apartments.last_page;
         } else {
-          // Gestisci il caso in cui la risposta non contiene la proprietà apartments
           this.apartments = []
         }
-      })
+      });
     },
     getAmenities() {
       axios.get(`${this.baseUrl}/api/amenities`).then(res => {
         this.amenities = res.data.amenities
       })
-    }
+    },
   }
 }
 </script>
+
 
 <template>
   <div class="container mt-5">
@@ -78,7 +88,17 @@ export default {
             </label>
           </div>
         </div>
+        <div class="my-3">
+          <h2>Numero minimo di stanze</h2>
+          <input class="form-control" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
+        </div>
+        <div class="my-3">
+          <h2>Posti letto</h2>
+          <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
+        </div>
+        <button @click="searchApartments" class="btn btn-primary">Cerca</button>
       </div>
+
     </div>
     <!-- /Offcanvas amenities -->
     <div class="row justify-content-around pt-5">
@@ -101,7 +121,7 @@ export default {
     <nav aria-label="Page navigation">
       <ul class="pagination    ">
         <li class="page-item">
-          <a class="page-link" @click.prevent="getProjects(currentPage - 1)" href="#" aria-label="Previous">
+          <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
