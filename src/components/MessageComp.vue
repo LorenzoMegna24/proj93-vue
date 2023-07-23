@@ -28,7 +28,7 @@ export default {
                 content: this.content,
             }
 
-            axios.post(`${this.baseUrl}/api/contacts`, data).then(res => {
+            axios.post(`${this.baseUrl}/api/messages`, data).then(res => {
                 this.success = res.data.success
                 if (this.success) {
                     this.name = '';
@@ -67,7 +67,7 @@ export default {
         </div>
 
         <div class="mb-3">
-            <label for="TextMessage" class="form-label">Messaggio</label>
+            <label for="TextMessage" class="form-label">Messaggio *</label>
             <textarea v-model="content" class="form-control" name="content" id="" rows="3"
                 placeholder="Scrivi il testo del messaggio"></textarea>
         </div>

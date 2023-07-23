@@ -40,7 +40,7 @@ export default {
 </script>
 
 <template>
-  <div class="p-4">
+  <div class="p-4 container">
 
     <h2 class="pt-5">{{ apartment.title }}</h2>
     <img style="height: 250px" :src="`${apiUrl}/storage/${apartment.image}`" alt="immagine">
