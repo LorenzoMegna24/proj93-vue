@@ -43,6 +43,27 @@ export default {
         params.amenities_id = this.selectedAmenities.join(',');
       }
 
+      // Ottieni la latitudine e longitudine dell'indirizzo o della città inserita dall'utente
+      if (this.location) {
+        const url = 'https://api.tomtom.com/search/2/geocode/' + encodeURIComponent(this.location) + '.json?key=asb5Pwh7kCfYH2ak33Rwa7ebLVG3P4GF';
+        axios.get(url).then(res => {
+          if (res.data.results && res.data.results.length > 0) {
+            const latitude = res.data.results[0].position.lat;
+            const longitude = res.data.results[0].position.lon;
+
+            // Invia la latitudine e longitudine come parametri della richiesta
+            params.latitude = latitude;
+            params.longitude = longitude;
+
+            this.fetchApartments(params);
+          }
+        });
+      } else {
+        this.fetchApartments(params);
+      }
+    },
+    fetchApartments(params) {
+      console.log('Parametri della richiesta:', params);
       axios.get(`${this.baseUrl}/api/apartments`, { params }).then(res => {
         if (res.data.apartments) {
           this.apartments = res.data.apartments.data;
@@ -62,7 +83,6 @@ export default {
 }
 </script>
 
-
 <template>
   <div class="container mt-5">
     <!-- Offcanvas amenities -->
@@ -70,6 +90,11 @@ export default {
       aria-controls="offcanvasExample">
       Filtri
     </a>
+    <div class="my-3">
+      <h2>Ricerca per posizione geografica</h2>
+      <input class="form-control" type="text" v-model="location" placeholder="Inserisci indirizzo o città">
+      <button @click="searchApartments" class="btn btn-primary mt-3">Cerca</button>
+    </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filtri</h5>
@@ -102,6 +127,8 @@ export default {
     </div>
     <!-- /Offcanvas amenities -->
     <div class="row justify-content-around pt-5">
+
+
       <div v-if="apartments.length === 0" class="text-center my-3">
         Non ci sono appartamenti che corrispondono ai filtri selezionati
       </div>
