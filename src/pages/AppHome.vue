@@ -101,54 +101,56 @@ export default {
     <div v-if="freeformAddress" class="my-3">
       Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
     </div>
-  </div>
 
 
-  <div class="row justify-content-around pt-5">
+
+    <div class="row justify-content-around pt-5">
 
 
-    <div v-if="searched && apartments.length === 0" class="text-center my-3">
-      Non ci sono appartamenti nella località selezionata
-    </div>
-
-    <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
-      <div class="card">
-        <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
-        <div class="card-body">
-          <RouterLink :to="{ name: 'apartment', params: { slug: elem.slug } }">
-            <h4>{{ elem.title }}</h4>
-          </RouterLink>
-          <p class="card-text">{{ elem.address }}</p>
-          <p>Stanze: {{ elem.room }}</p>
-          <p>Letti: {{ elem.bed }}</p>
-          <p class="mb-0">Servizi:</p>
-          <p class="d-flex flex-wrap">
-            <span v-for="amenity in elem.amenities" :key="amenity.id">
-              <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
-            </span>
-          </p>
-        </div>
+      <div v-if="searched && apartments.length === 0" class="text-center my-3">
+        Non ci sono appartamenti nella località selezionata
       </div>
 
+      <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
+        <div class="card">
+          <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+          <div class="card-body">
+            <RouterLink :to="{ name: 'apartment', params: { slug: elem.slug } }">
+              <h4>{{ elem.title }}</h4>
+            </RouterLink>
+            <p class="card-text">{{ elem.address }}</p>
+            <p>Stanze: {{ elem.room }}</p>
+            <p>Letti: {{ elem.bed }}</p>
+            <p class="mb-0">Servizi:</p>
+            <p class="d-flex flex-wrap">
+              <span v-for="amenity in elem.amenities" :key="amenity.id">
+                <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
+              </span>
+            </p>
+          </div>
+        </div>
+
+      </div>
     </div>
+
+    <nav v-if="apartments.length > 0" aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+          <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
+          <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
+        </li>
+        <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
+          <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-  <nav v-if="apartments.length > 0" aria-label="Page navigation">
-    <ul class="pagination">
-      <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
-        <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
-        <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
-      </li>
-      <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
-        <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
 </template>
 
 <style lang="scss">
