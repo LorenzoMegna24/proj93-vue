@@ -14,6 +14,8 @@ export default {
       minRooms: null,
       minBeds: null,
       freeformAddress: null,
+      addressSuggestions: [],
+      selectedRadius: '20',
     }
   },
   mounted() {
@@ -27,9 +29,28 @@ export default {
       offcanvas.hide();
       this.getApartments(1); // Aggiungiamo il parametro della pagina (1) per resettare la paginazione
     },
+    getAddressSuggestions() {
+      if (this.location) {
+        const url = 'https://api.tomtom.com/search/2/search/' + encodeURIComponent(this.location) + '.json?typeahead=true&limit=5&key=asb5Pwh7kCfYH2ak33Rwa7ebLVG3P4GF';
+        axios.get(url).then(res => {
+          if (res.data.results && res.data.results.length > 0) {
+            this.addressSuggestions = res.data.results.map(result => result.address.freeformAddress);
+          } else {
+            this.addressSuggestions = [];
+          }
+        });
+      } else {
+        this.addressSuggestions = [];
+      }
+    },
+    selectAddress(address) {
+      this.location = address;
+      this.addressSuggestions = [];
+    },
     getApartments(apartmentApiPage) {
       const params = {
         page: apartmentApiPage,
+        radius: this.selectedRadius,
       }
 
       if (this.minRooms) {
@@ -93,8 +114,16 @@ export default {
       Filtri
     </a>
     <div class="my-3">
+      <!-- Ricerca geografica -->
       <h2>Ricerca per posizione geografica</h2>
-      <input class="form-control" type="text" v-model="location" placeholder="Inserisci indirizzo o città">
+      <input class="form-control" type="text" v-model="location" placeholder="Inserisci indirizzo o città"
+        @input="getAddressSuggestions">
+      <ul class="list-group mt-2" v-if="addressSuggestions.length > 0">
+        <li class="list-group-item list-group-item-action" style="cursor: pointer;"
+          v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
+          {{ address }}
+        </li>
+      </ul>
       <button @click="searchApartments" class="btn btn-primary mt-3">Cerca</button>
     </div>
     <div v-if="freeformAddress" class="my-3">
@@ -125,6 +154,15 @@ export default {
         <div class="my-3">
           <h2>Posti letto</h2>
           <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
+        </div>
+        <div class="my-3">
+          <h2 for="radius-select">Raggio di ricerca:</h2>
+          <select id="radius-select" class="form-select" v-model="selectedRadius" style="width: 100px;">
+            <option value="1">1 km</option>
+            <option value="5">5 km</option>
+            <option value="10">10 km</option>
+            <option value="20">20 km</option>
+          </select>
         </div>
         <button @click="searchApartments" class="btn btn-primary">Cerca</button>
       </div>
