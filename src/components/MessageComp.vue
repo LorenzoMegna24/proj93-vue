@@ -85,6 +85,33 @@ export default {
             <button type="submit" class="btn btn-primary">Invia</button>
             <span class="fs-6 fst-italic">* campi obbligatori</span>
         </div>
+
     </form>
+
+    <div class="modal" tabindex="-1" :class="{ show: success }">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @click="success = false">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
-<style lang="scss" scoped></style>
+
+<style lang="scss" scoped>
+.modal {
+    display: none;
+}
+
+.modal.show {
+    display: block;
+}
+</style>
