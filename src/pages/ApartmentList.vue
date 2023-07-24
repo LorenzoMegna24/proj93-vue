@@ -13,6 +13,7 @@ export default {
       baseUrl: 'http://127.0.0.1:8000',
       minRooms: null,
       minBeds: null,
+      freeformAddress: null,
     }
   },
   mounted() {
@@ -48,6 +49,7 @@ export default {
         const url = 'https://api.tomtom.com/search/2/geocode/' + encodeURIComponent(this.location) + '.json?key=asb5Pwh7kCfYH2ak33Rwa7ebLVG3P4GF';
         axios.get(url).then(res => {
           if (res.data.results && res.data.results.length > 0) {
+            this.freeformAddress = res.data.results[0].address.freeformAddress;
             const latitude = res.data.results[0].position.lat;
             const longitude = res.data.results[0].position.lon;
 
@@ -94,6 +96,9 @@ export default {
       <h2>Ricerca per posizione geografica</h2>
       <input class="form-control" type="text" v-model="location" placeholder="Inserisci indirizzo o città">
       <button @click="searchApartments" class="btn btn-primary mt-3">Cerca</button>
+    </div>
+    <div v-if="freeformAddress" class="my-3">
+      Risultati per {{ freeformAddress }}:
     </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
