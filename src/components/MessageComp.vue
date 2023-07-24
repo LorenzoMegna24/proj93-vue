@@ -1,10 +1,19 @@
 <script>
-import axios, { all } from 'axios';
+import axios from 'axios';
 
 export default {
     name: "MessageComp",
     components: {
 
+    },
+    props: {
+        apartment_id: {
+            type: Number,
+            required: true
+        }
+    },
+    created() {
+        console.log(this.apartment_id); // aggiungi questa riga
     },
 
     data() {
@@ -22,12 +31,13 @@ export default {
     methods: {
         sendMessage() {
             const data = {
+                apartment_id: this.apartment_id,
                 name: this.name,
                 surname: this.surname,
                 mail: this.mail,
                 content: this.content,
             }
-
+            console.log(data);
             axios.post(`${this.baseUrl}/api/messages`, data).then(res => {
                 this.success = res.data.success
                 if (this.success) {

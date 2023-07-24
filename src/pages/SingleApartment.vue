@@ -57,7 +57,8 @@ export default {
       </div>
     </div>
 
-    <MessageComp />
+    <MessageComp v-if="apartment.id" :apartment_id="apartment.id" />
+
 
   </div>
 </template>
