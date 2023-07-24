@@ -16,10 +16,10 @@ export default {
       freeformAddress: null,
       addressSuggestions: [],
       selectedRadius: '20',
+      searched: false,
     }
   },
   mounted() {
-    this.getApartments(1);
     this.getAmenities();
   },
   methods: {
@@ -27,7 +27,8 @@ export default {
       const offcanvasElement = document.getElementById('offcanvasExample');
       const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement) || new bootstrap.Offcanvas(offcanvasElement);
       offcanvas.hide();
-      this.getApartments(1); // Aggiungiamo il parametro della pagina (1) per resettare la paginazione
+      this.getApartments(1);
+      this.searched = true;
     },
     getAddressSuggestions() {
       if (this.location) {
@@ -65,7 +66,6 @@ export default {
         params.amenities_id = this.selectedAmenities.join(',');
       }
 
-      // Ottieni la latitudine e longitudine dell'indirizzo o della città inserita dall'utente
       if (this.location) {
         const url = 'https://api.tomtom.com/search/2/geocode/' + encodeURIComponent(this.location) + '.json?key=asb5Pwh7kCfYH2ak33Rwa7ebLVG3P4GF';
         axios.get(url).then(res => {
@@ -74,7 +74,6 @@ export default {
             const latitude = res.data.results[0].position.lat;
             const longitude = res.data.results[0].position.lon;
 
-            // Invia la latitudine e longitudine come parametri della richiesta
             params.latitude = latitude;
             params.longitude = longitude;
 
@@ -111,11 +110,11 @@ export default {
     <!-- Offcanvas amenities -->
     <a class="btn btn-primary mt-5" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
       aria-controls="offcanvasExample">
-      Filtri
+      Aggiungi Filtri
     </a>
     <div class="my-3">
       <!-- Ricerca geografica -->
-      <h2>Ricerca per posizione geografica</h2>
+      <h2>Ricerca una località</h2>
       <input class="form-control" type="text" v-model="location" placeholder="Inserisci indirizzo o città"
         @input="getAddressSuggestions">
       <ul class="list-group mt-2" v-if="addressSuggestions.length > 0">
@@ -157,13 +156,9 @@ export default {
           <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
         </div>
         <div class="my-3">
-          <h2 for="radius-select">Raggio di ricerca:</h2>
-          <select id="radius-select" class="form-select" v-model="selectedRadius" style="width: 100px;">
-            <option value="1">1 km</option>
-            <option value="5">5 km</option>
-            <option value="10">10 km</option>
-            <option value="20">20 km</option>
-          </select>
+          <h2 for="radius-range">Raggio di ricerca:</h2>
+          <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
+          <div>{{ selectedRadius }} km</div>
         </div>
         <button @click="searchApartments" class="btn btn-primary">Cerca</button>
       </div>
@@ -173,9 +168,10 @@ export default {
     <div class="row justify-content-around pt-5">
 
 
-      <div v-if="apartments.length === 0" class="text-center my-3">
+      <div v-if="searched && apartments.length === 0" class="text-center my-3">
         Non ci sono appartamenti che corrispondono ai filtri selezionati
       </div>
+
       <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
         <div class="card">
           <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">

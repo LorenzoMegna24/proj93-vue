@@ -27,13 +27,10 @@ export default {
                                 class="visually-hidden">(current)</span></RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" :to="{ name: 'apartments' }">Appartamenti</RouterLink>
+                        <RouterLink class="nav-link" :to="{ name: 'apartments' }">Ricerca Avanzata</RouterLink>
                     </li>
                 </ul>
-                <form class="d-flex my-2 my-lg-0">
-                    <input class="form-control me-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
                 <a class="nav-link active ms-2" href="http://127.0.0.1:8000/register" aria-current="page">Registrati<span
                         class="visually-hidden">(current)</span></a>
                 <a class="nav-link active ms-2" href="http://127.0.0.1:8000/login" aria-current="page">Accedi <span
