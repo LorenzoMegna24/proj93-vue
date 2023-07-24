@@ -127,7 +127,7 @@ export default {
       <button @click="searchApartments" class="btn btn-primary mt-3">Cerca</button>
     </div>
     <div v-if="freeformAddress" class="my-3">
-      Risultati per {{ freeformAddress }}:
+      Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
     </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
@@ -139,12 +139,13 @@ export default {
           <h2>Servizi</h2>
         </div>
         <div class="mt-3">
-          <div class="form-check d-flex flex-wrap">
-            <label class="form-check-label me-5 mb-2 d-flex align-items-center" v-for="(elem, index) in amenities"
+          <div class="form-check d-flex flex-column" style="max-height: 350px; min-height: 250px; overflow-y: scroll;">
+            <div class="form-check-label me-5 mb-2 d-flex align-items-center" v-for="(elem, index) in amenities"
               :key="index" for="flexCheckDefault">
               <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
               <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
-            </label>
+              <p class="mb-0 ms-2">{{ elem.name }}</p>
+            </div>
           </div>
         </div>
         <div class="my-3">
@@ -183,6 +184,14 @@ export default {
               <h4>{{ elem.title }}</h4>
             </RouterLink>
             <p class="card-text">{{ elem.address }}</p>
+            <p>Stanze: {{ elem.room }}</p>
+            <p>Letti: {{ elem.bed }}</p>
+            <p class="mb-0">Servizi:</p>
+            <p class="d-flex flex-wrap">
+              <span v-for="amenity in elem.amenities" :key="amenity.id">
+                <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
+              </span>
+            </p>
           </div>
         </div>
 

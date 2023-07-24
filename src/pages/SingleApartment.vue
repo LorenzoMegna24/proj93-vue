@@ -52,8 +52,9 @@ export default {
 
     <div>
       <p>Servizi:</p>
-      <div v-for="elem in apartment.amenities" :key="elem.id">
+      <div v-for="elem in apartment.amenities" :key="elem.id" class="d-flex align-items-center my-2">
         <img class="me-3" :src="`${apiUrl}/storage/${elem.image}`" alt="elem.name" style="height: 20px">
+        <p class="m-0">{{ elem.name }}</p>
       </div>
     </div>
 
