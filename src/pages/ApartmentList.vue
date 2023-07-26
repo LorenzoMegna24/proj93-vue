@@ -106,67 +106,93 @@ export default {
 </script>
 
 <template>
-  <div class="container mt-5">
-    <!-- Offcanvas amenities -->
-    <a class="btn btn-primary mt-5" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-      aria-controls="offcanvasExample">
-      Aggiungi Filtri
-    </a>
-    <div class="my-3">
-      <!-- Ricerca geografica -->
-      <h2>Ricerca una località</h2>
-      <input class="form-control" type="text" v-model="location" placeholder="Inserisci indirizzo o città"
-        @input="getAddressSuggestions">
-      <ul class="list-group mt-2" v-if="addressSuggestions.length > 0">
-        <li class="list-group-item list-group-item-action" style="cursor: pointer;"
-          v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
-          {{ address }}
-        </li>
-      </ul>
-      <button @click="searchApartments" class="btn btn-primary mt-3">Cerca</button>
-    </div>
-    <div v-if="freeformAddress" class="my-3">
-      Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
-    </div>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filtri</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
-        <div>
-          <h2>Servizi</h2>
-        </div>
-        <div class="mt-3">
-          <div class="form-check d-flex flex-column" style="max-height: 350px; min-height: 250px; overflow-y: scroll;">
-            <div class="form-check-label me-5 mb-2 d-flex align-items-center" v-for="(elem, index) in amenities"
-              :key="index" for="flexCheckDefault">
-              <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
-              <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
-              <p class="mb-0 ms-2">{{ elem.name }}</p>
+  <main class="main-container mt-5 pt-4">
+
+    <div class="container w-75">
+
+      <!-- Offcanvas amenities -->
+
+      <div class="pt-4 rounded-4 general-container" v-if="searched == false">
+
+        <!-- Ricerca geografica -->
+        <div class="input-container w-50 p-3 rounded-3 shadow ms-3">
+          <h3 class="text-color">Ricerca una località</h3>
+
+          <div class="d-flex justify-content-between">
+            <div class="w-100">
+              <input class="form-control input-indirizzo" type="text" v-model="location"
+                placeholder="Inserisci indirizzo o città" @input="getAddressSuggestions">
+              <ul class="list-group mt-2" v-if="addressSuggestions.length > 0">
+                <li class="list-group-item list-group-item-action" style="cursor: pointer;"
+                  v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
+                  {{ address }}
+                </li>
+              </ul>
+            </div>
+            <div>
+              <button @click="searchApartments" class="btn mt-3 btn-color ms-1">Cerca</button>
             </div>
           </div>
+
+          <div v-if="freeformAddress" class="my-3">
+            Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
+          </div>
+          <a class="btn mt-3 btn-color" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+            aria-controls="offcanvasExample">
+            Aggiungi Filtri
+          </a>
+
         </div>
-        <div class="my-3">
-          <h2>Numero minimo di stanze</h2>
-          <input class="form-control" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
-        </div>
-        <div class="my-3">
-          <h2>Posti letto</h2>
-          <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
-        </div>
-        <div class="my-3">
-          <h2 for="radius-range">Raggio di ricerca:</h2>
-          <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
-          <div>{{ selectedRadius }} km</div>
-        </div>
-        <button @click="searchApartments" class="btn btn-primary">Cerca</button>
       </div>
 
-    </div>
-    <!-- /Offcanvas amenities -->
-    <div class="row justify-content-around pt-5">
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filtri</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <h2>Servizi</h2>
+          </div>
+          <div class="mt-3">
+            <div class="form-check d-flex flex-column" style="max-height: 350px; min-height: 250px; overflow-y: scroll;">
+              <div class="form-check-label me-5 mb-2 d-flex align-items-center" v-for="(elem, index) in amenities"
+                :key="index" for="flexCheckDefault">
+                <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
+                <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
+                <p class="mb-0 ms-2">{{ elem.name }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="my-3">
+            <h2>Numero minimo di stanze</h2>
+            <input class="form-control" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
+          </div>
+          <div class="my-3">
+            <h2>Posti letto</h2>
+            <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
+          </div>
+          <div class="my-3">
+            <h2 for="radius-range">Raggio di ricerca:</h2>
+            <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
+            <div>{{ selectedRadius }} km</div>
+          </div>
+          <button @click="searchApartments" class="btn btn-primary">Cerca</button>
+        </div>
 
+      </div>
+      <!-- /Offcanvas amenities -->
+
+      <!-- Appartamenti dopo la ricerca -->
+
+
+      <div class="row justify-content-around pt-5">
+
+        <div v-if="freeformAddress" class="my-3">
+          Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
+        </div>
+
+      </div>
 
       <div v-if="searched && apartments.length === 0" class="text-center my-3">
         Non ci sono appartamenti che corrispondono ai filtri selezionati
@@ -210,11 +236,44 @@ export default {
         </li>
       </ul>
     </nav>
-  </div>
+
+  </main>
 </template>
 
 <style lang="scss" scoped>
 .form-check-input {
   border-color: rgb(70, 68, 68);
+}
+
+.main-container {
+  background-color: #FAEDCD;
+
+  .general-container {
+    background-image: url('/public/img/scott-webb-1ddol8rgUH8-unsplash.jpg');
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 35rem;
+
+    .input-container {
+      background-color: rgba($color: #FAEDCD, $alpha: 0.8);
+
+      .text-color {
+        color: darkslategray;
+      }
+
+      .input-indirizzo {
+        height: 2.5rem;
+        margin-top: 0.9rem;
+      }
+
+      .btn-color {
+        background-color: #CCD5AE;
+        color: darkslategray;
+        border: 1px solid darkgrey;
+      }
+    }
+  }
+
 }
 </style>
