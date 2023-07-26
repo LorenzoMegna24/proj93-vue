@@ -106,16 +106,16 @@ export default {
 </script>
 
 <template>
-  <main class="main-container mt-5 pt-4">
+  <main class="main-container mt-4 pt-4">
 
-    <div class="container w-75">
+    <div>
 
       <!-- Offcanvas amenities -->
 
-      <div class="pt-4 rounded-4 general-container" v-if="searched == false">
+      <div class="pt-4  general-container">
 
         <!-- Ricerca geografica -->
-        <div class="input-container w-50 p-3 rounded-3 shadow ms-3">
+        <div class="input-container  p-3 rounded-3 shadow ms-3">
           <h3 class="text-color">Ricerca una località</h3>
 
           <div class="d-flex justify-content-between">
@@ -134,9 +134,6 @@ export default {
             </div>
           </div>
 
-          <div v-if="freeformAddress" class="my-3">
-            Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
-          </div>
           <a class="btn mt-3 btn-color" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample">
             Aggiungi Filtri
@@ -152,7 +149,7 @@ export default {
         </div>
         <div class="offcanvas-body">
           <div>
-            <h2>Servizi</h2>
+            <h4>Servizi</h4>
           </div>
           <div class="mt-3">
             <div class="form-check d-flex flex-column" style="max-height: 350px; min-height: 250px; overflow-y: scroll;">
@@ -164,16 +161,16 @@ export default {
               </div>
             </div>
           </div>
-          <div class="my-3">
-            <h2>Numero minimo di stanze</h2>
+          <div class="my-4">
+            <h4>Numero minimo di stanze</h4>
             <input class="form-control" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
           </div>
-          <div class="my-3">
-            <h2>Posti letto</h2>
+          <div class="my-4">
+            <h4>Posti letto</h4>
             <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
           </div>
-          <div class="my-3">
-            <h2 for="radius-range">Raggio di ricerca:</h2>
+          <div class="my-4">
+            <h4 for="radius-range">Raggio di ricerca:</h4>
             <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
             <div>{{ selectedRadius }} km</div>
           </div>
@@ -185,57 +182,67 @@ export default {
 
       <!-- Appartamenti dopo la ricerca -->
 
+      <div class="big-container" v-if="searched">
+        <div class="container-fluid container-cards pb-3">
 
-      <div class="row justify-content-around pt-5">
+          <div class="row mt-5">
 
-        <div v-if="freeformAddress" class="my-3">
-          Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
-        </div>
+            <div v-if="freeformAddress" class="mb-3 text-km pb-3">
+              Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
+            </div>
 
-      </div>
 
-      <div v-if="searched && apartments.length === 0" class="text-center my-3">
-        Non ci sono appartamenti che corrispondono ai filtri selezionati
-      </div>
 
-      <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
-        <div class="card">
-          <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
-          <div class="card-body">
-            <RouterLink :to="{ name: 'apartment', params: { slug: elem.slug } }">
-              <h4>{{ elem.title }}</h4>
-            </RouterLink>
-            <p class="card-text">{{ elem.address }}</p>
-            <p>Stanze: {{ elem.room }}</p>
-            <p>Letti: {{ elem.bed }}</p>
-            <p class="mb-0">Servizi:</p>
-            <p class="d-flex flex-wrap">
-              <span v-for="amenity in elem.amenities" :key="amenity.id">
-                <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
-              </span>
-            </p>
+            <div v-if="searched && apartments.length === 0" class="text-center my-3">
+              Non ci sono appartamenti che corrispondono ai filtri selezionati
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 my-3" v-for="(elem, index) in apartments" :key="index">
+              <div class="card single-card shadow">
+                <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+                <div class="card-body">
+                  <RouterLink class="text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
+                    <h5>{{ elem.title }}</h5>
+                  </RouterLink>
+                  <p class="card-text">{{ elem.address }}</p>
+                  <p><strong>Stanze:</strong> {{ elem.room }}</p>
+                  <p><strong>Letti:</strong> {{ elem.bed }}</p>
+                  <p class="mb-1"><strong>Servizi:</strong></p>
+                  <p class="d-flex flex-wrap">
+                    <span v-for="amenity in elem.amenities" :key="amenity.id">
+                      <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
+                        style="height: 20px">
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
+
+
+      <div class="d-flex justify-content-center py-2">
+        <nav v-if="apartments.length > 0" aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+              <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
+              <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
+            </li>
+            <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
+              <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
     </div>
-    <nav v-if="apartments.length > 0" aria-label="Page navigation">
-      <ul class="pagination">
-        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
-          <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
-          <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
-        </li>
-        <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
-          <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
 
   </main>
 </template>
@@ -246,21 +253,19 @@ export default {
 }
 
 .main-container {
-  background-color: #FAEDCD;
 
   .general-container {
-    background-image: url('/public/img/scott-webb-1ddol8rgUH8-unsplash.jpg');
-    background-position: top;
+    background-image: url('/public/img/digital-marketing-agency-ntwrk-g39p1kDjvSY-unsplash.jpg');
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 35rem;
+    height: 37rem;
 
     .input-container {
-      background-color: rgba($color: #FAEDCD, $alpha: 0.8);
+      background-color: rgba($color: #FFFFFF, $alpha: 0.9);
+      color: #2382F7;
 
-      .text-color {
-        color: darkslategray;
-      }
+
 
       .input-indirizzo {
         height: 2.5rem;
@@ -268,12 +273,77 @@ export default {
       }
 
       .btn-color {
-        background-color: #CCD5AE;
-        color: darkslategray;
-        border: 1px solid darkgrey;
+        background-color: #2382F7;
+        color: white;
+
       }
     }
   }
 
+}
+
+.big-container {
+  background-color: #E8F3FE;
+
+  .container-cards {
+
+    .text-km {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #2382F7;
+      background-color: white;
+    }
+
+    .single-card {
+      height: 34rem;
+
+      h5 {
+        color: #2382F7;
+      }
+
+      .card-img-top {
+        height: 18rem;
+
+      }
+
+      .card-text {
+        font-style: oblique;
+      }
+    }
+  }
+}
+
+.offcanvas-header {
+  background-color: #E8F3FE;
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 425px) {
+  .main-container {
+    .input-container {
+      width: 75%;
+    }
+  }
+}
+
+
+@media screen and (min-width: 426px) {
+  .main-container {
+    .input-container {
+      width: 60%;
+    }
+  }
+}
+
+
+@media screen and (min-width: 1000px) {
+  .main-container {
+    .input-container {
+      width: 50%;
+    }
+  }
 }
 </style>
