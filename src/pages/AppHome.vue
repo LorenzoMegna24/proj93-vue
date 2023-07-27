@@ -87,16 +87,13 @@ export default {
 </script>
 
 <template>
-
   <section>
 
     <div class="container">
       <h1 class="mt-5 pt-2">Welcome</h1>
     </div>
 
-    <div>
-      <SponsorComp />
-    </div>
+
 
     <div class="my-3 container">
       <!-- Ricerca geografica -->
@@ -143,6 +140,9 @@ export default {
           </div>
 
         </div>
+        <div>
+          <SponsorComp />
+        </div>
       </div>
 
       <nav v-if="apartments.length > 0" aria-label="Page navigation">
@@ -168,7 +168,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-  section{
-    background-color: rgb(204, 228, 253);
-  }
+section {
+  background-color: rgb(204, 228, 253);
+}
 </style>
