@@ -187,7 +187,7 @@ export default {
 
           <div class="row mt-5">
 
-            <div v-if="freeformAddress" class="mb-3 text-km pb-3">
+            <div v-if="freeformAddress" class="mb-2 text-km pb-3">
               Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
             </div>
 
@@ -198,8 +198,8 @@ export default {
             </div>
 
             <div class="col-lg-4 col-md-6 col-sm-12 my-3" v-for="(elem, index) in apartments" :key="index">
-              <div class="card single-card border-0">
-                <img class="card-img-top rounded-3 shadow-lg" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+              <div class="card single-card border-0 shadow">
+                <img class="card-img-top rounded-3" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
                 <div class="card-body">
                   <RouterLink class="text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
                     <h5>{{ elem.title }}</h5>
@@ -248,9 +248,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
-
-
 .form-check-input {
   border-color: rgb(70, 68, 68);
 }
@@ -285,9 +282,10 @@ export default {
 
 }
 
-.main-container{
+.main-container {
   background-color: #E8F3FE;
 }
+
 .big-container {
 
   .container-cards {
@@ -300,7 +298,7 @@ export default {
 
     .single-card {
       height: 34rem;
-      background-color: #E8F3FE;
+      background-color: rgba($color: #FFFFFF, $alpha: 0.6);
 
       h5 {
         color: #2382F7;
@@ -326,7 +324,7 @@ p {
   margin-bottom: 0.5rem;
 }
 
-.single-card:hover img{
+.single-card:hover img {
   filter: brightness(0.7);
 }
 
@@ -355,5 +353,4 @@ p {
     }
   }
 }
-
 </style>
