@@ -13,7 +13,7 @@ export default {
         }
     },
     created() {
-        console.log(this.apartment_id); // aggiungi questa riga
+        console.log(this.apartment_id);
     },
 
     data() {
@@ -30,6 +30,27 @@ export default {
     },
     methods: {
         sendMessage() {
+            // Resetta gli errori di validazione
+            this.errors = {};
+
+            // Verifica se i campi obbligatori sono stati compilati
+            if (!this.name) {
+                this.errors.name = 'Devi inserire il nome';
+            }
+            if (!this.surname) {
+                this.errors.surname = 'Devi inserire il cognome';
+            }
+            if (!this.mail) {
+                this.errors.mail = 'Devi inserire la mail';
+            }
+            if (!this.content) {
+                this.errors.content = 'Devi inserire il messaggio';
+            }
+
+            // Se ci sono errori di validazione, interrompi l'esecuzione del metodo
+            if (Object.keys(this.errors).length > 0) {
+                return;
+            }
             const data = {
                 apartment_id: this.apartment_id,
                 name: this.name,
@@ -63,32 +84,37 @@ export default {
                 <label for="InputName" class="form-label">Nome *</label>
                 <input v-model="name" type="text" class="form-control" name="name" id="" aria-describedby="helpId"
                     placeholder="Inserisci il tuo nome">
+                <strong v-if="errors.name" class="text-danger">{{ errors.name }}</strong>
             </div>
-    
+
             <div class="mb-3">
                 <label for="InputSurname" class="form-label">Cognome *</label>
                 <input v-model="surname" type="text" class="form-control" name="surname" id="" aria-describedby="helpId"
                     placeholder="Inserisci il tuo cognome">
+                <strong v-if="errors.surname" class="text-danger">{{ errors.surname }}</strong>
             </div>
-    
+
             <div class="mb-3">
                 <label for="InputEmail" class="form-label">Email *</label>
                 <input v-model="mail" type="email" class="form-control" name="mail" id="" aria-describedby="helpId"
                     placeholder="Inserisci la tua email">
+                <strong v-if="errors.mail" class="text-danger">{{ errors.mail }}</strong>
             </div>
-    
+
             <div class="mb-3">
                 <label for="TextMessage" class="form-label">Messaggio *</label>
                 <textarea v-model="content" class="form-control" name="content" id="" rows="3"
                     placeholder="Scrivi il testo del messaggio"></textarea>
+                <strong v-if="errors.content" class="text-danger">{{ errors.content }}</strong>
             </div>
+
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary">Invia</button>
                 <span class="fs-6 fst-italic">* campi obbligatori</span>
             </div>
-    
+
         </form>
-    
+
         <div class="modal" tabindex="-1" :class="{ show: success }">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -113,9 +139,10 @@ export default {
     display: none;
 }
 
-.contenitore{
+.contenitore {
     background-color: #85addd;
 }
+
 .modal.show {
     display: block;
 }

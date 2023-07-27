@@ -45,7 +45,10 @@ export default {
                     <div class="card">
                         <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
                         <div class="card-body">
-                            <h4>{{ elem.title }}</h4>
+                            <RouterLink class="text-decoration-none"
+                                :to="{ name: 'apartment', params: { slug: elem.slug } }">
+                                <h5>{{ elem.title }}</h5>
+                            </RouterLink>
                             <p class="card-text">{{ elem.address }}</p>
                             <p>Stanze: {{ elem.room }}</p>
                             <p>Letti: {{ elem.bed }}</p>
@@ -53,7 +56,7 @@ export default {
                             <p class="d-flex flex-wrap">
                                 <span v-for="amenity in elem.amenities" :key="amenity.id">
                                     <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
-                                    style="height: 20px">
+                                        style="height: 20px">
                                 </span>
                             </p>
                         </div>
@@ -65,6 +68,4 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
