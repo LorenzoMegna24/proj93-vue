@@ -55,51 +55,53 @@ export default {
 }
 </script>
 <template>
-    <!-- Invio messaggio al proprietario dell'appartamento -->
-    <form class="p-3 my-4 w-50 border rounded-3" @submit.prevent="sendMessage()">
-        <h5>Contatta il proprietario</h5>
-        <div class="mb-3">
-            <label for="InputName" class="form-label">Nome *</label>
-            <input v-model="name" type="text" class="form-control" name="name" id="" aria-describedby="helpId"
-                placeholder="Inserisci il tuo nome">
-        </div>
-
-        <div class="mb-3">
-            <label for="InputSurname" class="form-label">Cognome *</label>
-            <input v-model="surname" type="text" class="form-control" name="surname" id="" aria-describedby="helpId"
-                placeholder="Inserisci il tuo cognome">
-        </div>
-
-        <div class="mb-3">
-            <label for="InputEmail" class="form-label">Email *</label>
-            <input v-model="mail" type="email" class="form-control" name="mail" id="" aria-describedby="helpId"
-                placeholder="Inserisci la tua email">
-        </div>
-
-        <div class="mb-3">
-            <label for="TextMessage" class="form-label">Messaggio *</label>
-            <textarea v-model="content" class="form-control" name="content" id="" rows="3"
-                placeholder="Scrivi il testo del messaggio"></textarea>
-        </div>
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Invia</button>
-            <span class="fs-6 fst-italic">* campi obbligatori</span>
-        </div>
-
-    </form>
-
-    <div class="modal" tabindex="-1" :class="{ show: success }">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Conferma invio del messaggio</h5>
-                    <button type="button" class="btn-close" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Il messaggio è stato inviato correttamente.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @click="success = false">Close</button>
+    <div class="d-flex justify-content-center">
+        <!-- Invio messaggio al proprietario dell'appartamento -->
+        <form class="contenitore p-3 my-4 w-75 border rounded-3" @submit.prevent="sendMessage()">
+            <h5>Contatta il proprietario</h5>
+            <div class="mb-3">
+                <label for="InputName" class="form-label">Nome *</label>
+                <input v-model="name" type="text" class="form-control" name="name" id="" aria-describedby="helpId"
+                    placeholder="Inserisci il tuo nome">
+            </div>
+    
+            <div class="mb-3">
+                <label for="InputSurname" class="form-label">Cognome *</label>
+                <input v-model="surname" type="text" class="form-control" name="surname" id="" aria-describedby="helpId"
+                    placeholder="Inserisci il tuo cognome">
+            </div>
+    
+            <div class="mb-3">
+                <label for="InputEmail" class="form-label">Email *</label>
+                <input v-model="mail" type="email" class="form-control" name="mail" id="" aria-describedby="helpId"
+                    placeholder="Inserisci la tua email">
+            </div>
+    
+            <div class="mb-3">
+                <label for="TextMessage" class="form-label">Messaggio *</label>
+                <textarea v-model="content" class="form-control" name="content" id="" rows="3"
+                    placeholder="Scrivi il testo del messaggio"></textarea>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Invia</button>
+                <span class="fs-6 fst-italic">* campi obbligatori</span>
+            </div>
+    
+        </form>
+    
+        <div class="modal" tabindex="-1" :class="{ show: success }">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Conferma invio del messaggio</h5>
+                        <button type="button" class="btn-close" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Il messaggio è stato inviato correttamente.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="success = false">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,6 +113,9 @@ export default {
     display: none;
 }
 
+.contenitore{
+    background-color: #85addd;
+}
 .modal.show {
     display: block;
 }

@@ -112,7 +112,7 @@ export default {
 
       <!-- Offcanvas amenities -->
 
-      <div class="pt-4  general-container">
+      <div class=" d-flex justify-content-center align-items-center general-container">
 
         <!-- Ricerca geografica -->
         <div class="input-container  p-3 rounded-3 shadow ms-3">
@@ -198,8 +198,8 @@ export default {
             </div>
 
             <div class="col-lg-4 col-md-6 col-sm-12 my-3" v-for="(elem, index) in apartments" :key="index">
-              <div class="card single-card shadow">
-                <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+              <div class="card single-card border-0">
+                <img class="card-img-top rounded-3 shadow-lg" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
                 <div class="card-body">
                   <RouterLink class="text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
                     <h5>{{ elem.title }}</h5>
@@ -248,6 +248,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
+
+
 .form-check-input {
   border-color: rgb(70, 68, 68);
 }
@@ -259,7 +262,7 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 37rem;
+    height: 80vh;
 
     .input-container {
       background-color: rgba($color: #FFFFFF, $alpha: 0.9);
@@ -282,8 +285,10 @@ export default {
 
 }
 
-.big-container {
+.main-container{
   background-color: #E8F3FE;
+}
+.big-container {
 
   .container-cards {
 
@@ -291,11 +296,11 @@ export default {
       font-weight: 600;
       font-size: 1.2rem;
       color: #2382F7;
-      background-color: white;
     }
 
     .single-card {
       height: 34rem;
+      background-color: #E8F3FE;
 
       h5 {
         color: #2382F7;
@@ -319,6 +324,10 @@ export default {
 
 p {
   margin-bottom: 0.5rem;
+}
+
+.single-card:hover img{
+  filter: brightness(0.7);
 }
 
 @media screen and (max-width: 425px) {
@@ -346,4 +355,5 @@ p {
     }
   }
 }
+
 </style>
