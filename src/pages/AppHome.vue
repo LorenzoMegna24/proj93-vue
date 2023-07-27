@@ -89,60 +89,75 @@ export default {
 <template>
   <section>
 
-    <div class="container">
-      <h1 class="mt-5 pt-2">Welcome</h1>
-    </div>
+    <!-- welcome div -->
+    <div class="welcome d-flex align-items-center">
 
-
-
-    <div class="my-3 container">
       <!-- Ricerca geografica -->
-      <h2>Ricerca una località</h2>
-      <input class="form-control" type="text" v-model="location" placeholder="Inserisci indirizzo o città"
-        @input="getAddressSuggestions">
-      <ul class="list-group mt-2" v-if="addressSuggestions.length > 0">
-        <li class="list-group-item list-group-item-action" style="cursor: pointer;"
-          v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
-          {{ address }}
-        </li>
-      </ul>
-      <button @click="searchApartments" class="btn btn-primary mt-3">Cerca</button>
-      <div v-if="freeformAddress" class="my-3">
-        Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
-      </div>
 
+      <div class="py-5 container d-flex justify-content-center">
 
+        <div class="cont-ricerca p-3">
 
-      <div class="row justify-content-around pt-5">
+          <h2>Ricerca una località</h2>
+          
+           <!-- barra di ricerca e bottone -->
 
+          <div class="d-flex align-items-center">
 
-        <div v-if="searched && apartments.length === 0" class="text-center my-3">
-          Non ci sono appartamenti nella località selezionata
-        </div>
+            <input class="form-control" type="text" v-model="location" autocomplete="off" placeholder="Inserisci indirizzo o città"
+            @input="getAddressSuggestions">
 
-        <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
-          <div class="card">
-            <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
-            <div class="card-body">
-              <RouterLink :to="{ name: 'apartment', params: { slug: elem.slug } }">
-                <h4>{{ elem.title }}</h4>
-              </RouterLink>
-              <p class="card-text">{{ elem.address }}</p>
-              <p>Stanze: {{ elem.room }}</p>
-              <p>Letti: {{ elem.bed }}</p>
-              <p class="mb-0">Servizi:</p>
-              <p class="d-flex flex-wrap">
-                <span v-for="amenity in elem.amenities" :key="amenity.id">
-                  <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
-                </span>
-              </p>
-            </div>
+            <button @click="searchApartments" class="btn btn-primary ms-3">Cerca</button>
+            
           </div>
 
+          <!-- lista degli indirizzi consigliati -->
+          <ul class="list-group mt-2" v-if="addressSuggestions.length > 0">
+            <li class="list-group-item list-group-item-action lista-indirizzi" style="cursor: pointer;"
+            v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
+              {{ address }}
+            </li>
+          </ul>
+
+          <div v-if="freeformAddress" class="my-3">
+            Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
+          </div>
         </div>
-        <div>
-          <SponsorComp />
-        </div>
+        
+      </div>
+
+    </div>
+
+      <div class="my-3 container-card">
+
+
+        <div class="row justify-content-around pt-5">
+
+
+          <div v-if="searched && apartments.length === 0" class="text-center my-3">
+            Non ci sono appartamenti nella località selezionata
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12 my-3" v-for="(elem, index) in apartments" :key="index">
+            <div class="card single-card border-0">
+              <img class="card-img-top rounded-3" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+              <div class="card-body">
+                <RouterLink class="text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
+                  <h5>{{ elem.title }}</h5>
+                </RouterLink>
+                <p class="card-text">{{ elem.address }}</p>
+                <p>Stanze: {{ elem.room }}</p>
+                <p>Letti: {{ elem.bed }}</p>
+                <p class="mb-1">Servizi:</p>
+                <p class="d-flex flex-wrap">
+                  <span v-for="amenity in elem.amenities" :key="amenity.id">
+                    <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
+                  </span>
+                </p>
+              </div>
+            </div>
+
+          </div>
       </div>
 
       <nav v-if="apartments.length > 0" aria-label="Page navigation">
@@ -164,11 +179,70 @@ export default {
       </nav>
     </div>
 
+    <div>
+      <SponsorComp />
+     </div>
+
   </section>
 </template>
 
 <style lang="scss" scoped>
 section {
   background-color: rgb(204, 228, 253);
-}
-</style>
+
+  .welcome{
+      background-image: url("/img/frames-for-your-heart-2d4lAQAlbDA-unsplash.jpg");
+      background-position: center;
+      background-size:100vw;
+      background-repeat: no-repeat;
+      height: 90vh;
+
+      .cont-ricerca{
+        background-color: rgb(204, 228, 253, 0.7);
+        border-radius: 25px;
+        width: fit-content;
+
+
+        input{
+          width: 30rem;
+          height: 3rem;
+        }
+
+        .lista-indirizzi{
+          width: 30rem;
+          max-height: 5rem;
+        }
+      }
+
+    }
+
+    .container-card{
+      margin-inline: 1%;
+
+      .single-card{
+        height: 34rem;
+        background-color: rgba($color: #FFFFFF, $alpha: 0.6);
+        
+        h5 {
+          color: #2382F7;
+        }
+        
+        .card-img-top {
+          height: 18rem;
+        }
+        
+        .card-text {
+          font-style: oblique;
+        }
+        
+      }
+    }
+    
+    p {
+      margin-bottom: 0.5rem;
+    }
+    .single-card:hover img {
+      filter: brightness(0.7);
+    }
+  }
+  </style>

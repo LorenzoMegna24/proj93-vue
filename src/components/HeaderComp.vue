@@ -42,6 +42,11 @@ export default {
 
 <style lang="scss" scoped>
     
+    nav{
+        position:relative;
+        margin-bottom: 0;
+    }
+
     a:hover{
         cursor: pointer;
         background-color: #d7e4f2;
