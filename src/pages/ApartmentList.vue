@@ -94,6 +94,9 @@ export default {
         } else {
           this.apartments = []
         }
+        this.$nextTick(() => {
+          this.$refs.results.scrollIntoView({ behavior: 'smooth' });
+        });
       });
     },
     getAmenities() {
@@ -182,7 +185,7 @@ export default {
 
       <!-- Appartamenti dopo la ricerca -->
 
-      <div class="big-container" v-if="searched">
+      <div ref="results" class="big-container" v-if="searched">
         <div class="container-fluid container-cards pb-3">
 
           <div class="row mt-5">
@@ -205,6 +208,7 @@ export default {
                     <h5>{{ elem.title }}</h5>
                   </RouterLink>
                   <p class="card-text">{{ elem.address }}</p>
+                  <p><strong>Distanza:</strong> {{ elem.distance.toFixed(2) }} km</p>
                   <p><strong>Stanze:</strong> {{ elem.room }}</p>
                   <p><strong>Letti:</strong> {{ elem.bed }}</p>
                   <p class="mb-1"><strong>Servizi:</strong></p>

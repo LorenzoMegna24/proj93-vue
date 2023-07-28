@@ -14,7 +14,8 @@ export default {
 <template>
     <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light shadow">
         <div class="container">
-            <RouterLink class="navbar-brand px-2" :to="{ name: 'home' }">Navbar</RouterLink>
+            <RouterLink class="navbar-brand px-2" :to="{ name: 'home' }"><img src="../../public/logo.png"
+                    style="width: 70px;" alt=""></RouterLink>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                 aria-label="Toggle navigation">
