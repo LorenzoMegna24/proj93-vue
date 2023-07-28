@@ -76,7 +76,7 @@ export default {
 }
 </script>
 <template>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mt-4">
         <!-- Invio messaggio al proprietario dell'appartamento -->
         <form class="contenitore p-3 my-4 w-75 border rounded-3" @submit.prevent="sendMessage()">
             <h5>Contatta il proprietario</h5>

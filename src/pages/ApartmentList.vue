@@ -200,27 +200,36 @@ export default {
               Non ci sono appartamenti che corrispondono ai filtri selezionati
             </div>
 
+
+
             <div class="col-lg-4 col-md-6 col-sm-12 my-3" v-for="(elem, index) in apartments" :key="index">
-              <div class="card single-card border-0 shadow">
-                <img class="card-img-top rounded-3" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
-                <div class="card-body">
-                  <RouterLink class="text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
+
+              <RouterLink class="text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
+
+                <div class="card single-card border-0 shadow">
+                  <div class="container-img-top rounded-3">
+                    <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+                  </div>
+                  <div class="card-body">
+
                     <h5>{{ elem.title }}</h5>
-                  </RouterLink>
-                  <p class="card-text">{{ elem.address }}</p>
-                  <p><strong>Distanza:</strong> {{ elem.distance.toFixed(2) }} km</p>
-                  <p><strong>Stanze:</strong> {{ elem.room }}</p>
-                  <p><strong>Letti:</strong> {{ elem.bed }}</p>
-                  <p class="mb-1"><strong>Servizi:</strong></p>
-                  <p class="d-flex flex-wrap">
-                    <span v-for="amenity in elem.amenities" :key="amenity.id">
-                      <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
-                        style="height: 20px">
-                    </span>
-                  </p>
+                    <p class="card-text">{{ elem.address }}</p>
+                    <p><strong>Distanza:</strong> {{ elem.distance.toFixed(2) }} km</p>
+                    <p><strong>Stanze:</strong> {{ elem.room }}</p>
+                    <p><strong>Letti:</strong> {{ elem.bed }}</p>
+                    <p class="mb-1"><strong>Servizi:</strong></p>
+                    <p class="d-flex flex-wrap">
+                      <span v-for="amenity in elem.amenities" :key="amenity.id">
+                        <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
+                          style="height: 20px">
+                      </span>
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+              </RouterLink>
             </div>
+
           </div>
         </div>
       </div>
@@ -308,9 +317,17 @@ export default {
         color: #2382F7;
       }
 
+      .container-img-top {
+        overflow: hidden;
+      }
+
       .card-img-top {
         height: 18rem;
+        transition: transform 0.3s ease;
 
+        &:hover {
+          transform: scale(1.1);
+        }
       }
 
       .card-text {
@@ -326,10 +343,6 @@ export default {
 
 p {
   margin-bottom: 0.5rem;
-}
-
-.single-card:hover img {
-  filter: brightness(0.7);
 }
 
 @media screen and (max-width: 425px) {
