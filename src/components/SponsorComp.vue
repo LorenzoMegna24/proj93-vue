@@ -39,7 +39,7 @@ export default {
         <div class="container w-75">
             <h3>Appartamenti in evidenza</h3>
 
-            <div class="row">
+            <div class="card-cont">
                 <!-- card appartamenti in evidenza -->
                 <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
                     <div class="card">
@@ -68,4 +68,34 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.card-cont{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+
+    h5 {
+          color: #2382F7;
+        }
+        
+        .card-img-top {
+          height: 18rem;
+        }
+        
+        .card-text {
+          font-style: oblique;
+        }
+}
+    @media screen and (max-width:425px) {
+        .card-cont{
+            flex-direction: column;
+            
+            .card{
+                width: 80vw;
+            }
+        }
+    }
+
+</style>

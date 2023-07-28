@@ -99,11 +99,11 @@ export default {
 
         <div class="cont-ricerca p-3">
 
-          <h2>Ricerca una località</h2>
+          <h2 class="testo">Ricerca una località</h2>
 
           <!-- barra di ricerca e bottone -->
 
-          <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center int-bot">
 
             <input class="form-control" type="text" v-model="location" autocomplete="off"
               placeholder="Inserisci indirizzo o città" @input="getAddressSuggestions">
@@ -127,14 +127,13 @@ export default {
 
     </div>
 
-    <div ref="results" class="my-3 container-card">
+    <div class="mt-3 container-card">
 
+      <div v-if="searched && apartments.length" class="my-3">
+        Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
+      </div>
 
       <div class="row justify-content-around pt-5">
-
-        <div v-if="freeformAddress" class="my-3">
-          Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
-        </div>
 
         <div v-if="searched && apartments.length === 0" class="text-center my-3">
           Non ci sono appartamenti nella località selezionata
@@ -162,26 +161,29 @@ export default {
         </div>
       </div>
 
-      <nav v-if="apartments.length > 0" aria-label="Page navigation">
-        <ul class="pagination">
-          <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
-            <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
-            <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
-          </li>
-          <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
-            <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <div class="d-flex justify-content-center mt-5">
+
+        <nav v-if="apartments.length > 0" aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+              <a class="page-link" @click.prevent="getApartments(currentPage - 1)" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
+              <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
+            </li>
+            <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
+              <a class="page-link" @click.prevent="getApartments(currentPage + 1)" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
 
-    <div>
+    <div class="sponsor">
       <SponsorComp />
     </div>
 
@@ -204,6 +206,10 @@ section {
       border-radius: 25px;
       width: fit-content;
 
+      .testo{
+          text-align: center;
+          left: 50%;
+        }
 
       input {
         width: 30rem;
@@ -248,4 +254,46 @@ section {
     filter: brightness(0.7);
   }
 }
+
+@media screen and (min-width:768px){
+    section{
+
+      .welcome{
+        background-size: 100vw;
+        height: 70vh;
+      }
+
+    }
+  }
+
+  @media screen and (max-width:425px){
+    section{
+
+      .welcome{
+        background-size: 100vw;
+        height: 30vh;
+      }
+
+      .cont-ricerca{
+        display: flex;
+        flex-wrap: wrap;
+
+        .int-bot{
+          display: flex;
+          flex-direction: column;
+
+          input{
+            max-width: 250px;
+          }
+        }
+      }
+
+      .sponsor{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+      }
+
+    }
+  }
 </style>
