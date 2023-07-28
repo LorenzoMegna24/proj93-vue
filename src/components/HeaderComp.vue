@@ -31,33 +31,40 @@ export default {
                     </li>
                 </ul>
 
-                <a class="nav-link active ms-2 p-2" href="http://127.0.0.1:8000/register" aria-current="page">Registrati<span
-                        class="visually-hidden">(current)</span></a>
-                <a class="nav-link active ms-2 p-2" href="http://127.0.0.1:8000/login" aria-current="page">Accedi <span
-                        class="visually-hidden">(current)</span></a>
+
+                <div class="nav-item dropstart">
+                    <button class="btn nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false" style="color: #5F5F5F;">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="http://127.0.0.1:8000/login">Accedi</a></li>
+                        <li><a class="dropdown-item" href="http://127.0.0.1:8000/register">Registrati</a></li>
+                        <li> <a class="dropdown-item" href="http://127.0.0.1:8000/profile">Profilo</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 </template>
 
 <style lang="scss" scoped>
-    
-    nav{
-        position:relative;
-        margin-bottom: 0;
-    }
+nav {
+    position: relative;
+    margin-bottom: 0;
+}
 
-    a:hover{
-        cursor: pointer;
-        background-color: #d7e4f2;
-    }
+a:hover {
+    cursor: pointer;
+    background-color: #d7e4f2;
+}
 
-    a{
-        border-radius: 8px;
-    }
+a {
+    border-radius: 8px;
+}
 
-    #collapsibleNavId .router-link-active{
-        color: #246de3;
-        background-color: #d7e4f2;
-    }
+#collapsibleNavId .router-link-active {
+    color: #246de3;
+    background-color: #d7e4f2;
+}
 </style>
