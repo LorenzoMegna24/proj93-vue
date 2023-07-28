@@ -1,7 +1,18 @@
 <script>
 import axios from 'axios';
+import { Carousel, Pagination, Navigation, Slide } from 'vue3-carousel'
+
+import 'vue3-carousel/dist/carousel.css'
+
 export default {
     name: 'SponsorComp',
+    components: {
+        Carousel,
+        Slide,
+        Pagination,
+        Navigation,
+    },
+
     data() {
         return {
             apartments: [],
@@ -32,48 +43,97 @@ export default {
             })
         },
     }
+
 }
 </script>
 <template>
-    <div class="main-container mt-5 pt-4">
-        <div class="container w-75">
-            <h3>Appartamenti in evidenza</h3>
 
-            <div class="card-cont">
-                <!-- card appartamenti in evidenza -->
-                <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
-                    <div class="card">
-                        <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
-                        <div class="card-body">
-                            <RouterLink class="text-decoration-none"
-                                :to="{ name: 'apartment', params: { slug: elem.slug } }">
-                                <h5>{{ elem.title }}</h5>
-                            </RouterLink>
-                            <p class="card-text">{{ elem.address }}</p>
-                            <p>Stanze: {{ elem.room }}</p>
-                            <p>Letti: {{ elem.bed }}</p>
-                            <p class="mb-0">Servizi:</p>
-                            <p class="d-flex flex-wrap">
-                                <span v-for="amenity in elem.amenities" :key="amenity.id">
-                                    <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
-                                        style="height: 20px">
-                                </span>
-                            </p>
-                        </div>
+    <div class="container">
+
+        <h3>Appartamenti in evidenza</h3>
+
+        <Carousel id="activeClasses" :itemsToShow="3.95" :wrapAround="true" :transition="500">
+            <Slide class="carousel__slide" v-for="(slide, index) in apartments" :key="index">
+                <div class="carousel__item">
+                    <img class="card-img-top" :src="`${baseUrl}/storage/${slide.image}`" alt="Title">
+                    <div class="card-body">
+                        <RouterLink class="text-decoration-none"
+                            :to="{ name: 'apartment', params: { slug: slide.slug } }">
+                            <h5>{{ slide.title }}</h5>
+                        </RouterLink>
+                        <p class="card-text">{{ slide.address }}</p>
+                        <p>Stanze: {{ slide.room }}</p>
+                        <p>Letti: {{ slide.bed }}</p>
+                        <p class="mb-0">Servizi:</p>
+                        <p class="d-flex flex-wrap">
+                            <span v-for="amenity in slide.amenities" :key="amenity.id">
+                                <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
+                                    style="height: 20px">
+                            </span>
+                        </p>
                     </div>
                 </div>
+            </Slide>
 
-            </div>
-        </div>
+            <template #addons>
+                <Navigation />
+                <Pagination />
+            </template>
+        </Carousel>
+    
     </div>
+
 </template>
 
 <style lang="scss" scoped>
 
+.carousel__slide {
+  padding: 5px;
+}
+
+.carousel__viewport {
+  perspective: 2000px;
+}
+
+.carousel__track {
+  transform-style: preserve-3d;
+}
+
+.carousel__slide--sliding {
+  transition: 0.5s;
+}
+
+.carousel__slide {
+  opacity: 0.9;
+  transform: rotateY(-20deg) scale(0.9);
+}
+
+.carousel__slide--active ~ .carousel__slide {
+  transform: rotateY(20deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+  opacity: 1;
+  transform: rotateY(-10deg) scale(0.95);
+}
+
+.carousel__slide--next {
+  opacity: 1;
+  transform: rotateY(10deg) scale(0.95);
+}
+
+.carousel__slide--active {
+  opacity: 1;
+  transform: rotateY(0) scale(1.1);
+}
+
+
+
+
 .card-cont{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+
     
 
     h5 {
@@ -87,14 +147,20 @@ export default {
         .card-text {
           font-style: oblique;
         }
-}
+    }
+
     @media screen and (max-width:425px) {
-        .card-cont{
-            flex-direction: column;
-            
-            .card{
-                width: 80vw;
+
+        .main-container{
+            margin-left: 25px;
+            .card-cont{
+                flex-direction: column;
+                
+                .card{
+                    width: 80vw;
+                }
             }
+    
         }
     }
 
