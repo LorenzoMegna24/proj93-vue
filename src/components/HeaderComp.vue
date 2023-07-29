@@ -12,10 +12,10 @@ export default {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light shadow">
+    <nav class="navbar navbar-expand fixed-top navbar-light bg-light shadow">
         <div class="container">
-            <RouterLink class="navbar-brand px-2" :to="{ name: 'home' }"><img src="/logo.png"
-                    style="width: 70px;" alt=""></RouterLink>
+            <RouterLink class="navbar-brand px-2" :to="{ name: 'home' }"><img src="/logo.png" style="width: 70px;" alt="">
+            </RouterLink>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -28,7 +28,7 @@ export default {
                                 class="visually-hidden">(current)</span></RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" :to="{ name: 'apartments' }">Ricerca Avanzata</RouterLink>
+                        <RouterLink class="nav-link" :to="{ name: 'apartments' }">Ricerca avanzata</RouterLink>
                     </li>
                 </ul>
 
@@ -41,6 +41,7 @@ export default {
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="http://127.0.0.1:8000/login">Accedi</a></li>
                         <li><a class="dropdown-item" href="http://127.0.0.1:8000/register">Registrati</a></li>
+                        <li> <a class="dropdown-item" href="http://127.0.0.1:8000/profile/apartments">Appartamenti</a></li>
                         <li> <a class="dropdown-item" href="http://127.0.0.1:8000/profile">Profilo</a></li>
                     </ul>
                 </div>

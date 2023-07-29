@@ -49,7 +49,7 @@ export default {
             alt="immagine">
         </div>
 
-        <div class="info-container p-3 mt-3 container-fluid">
+        <div class="info-container p-3 mt-3 container-fluid shadow">
           <div class="indirizzo px-2">
             <span><i>{{ apartment.address }}</i></span>
           </div>

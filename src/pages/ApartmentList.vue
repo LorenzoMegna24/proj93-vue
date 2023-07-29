@@ -118,15 +118,15 @@ export default {
       <div class=" d-flex justify-content-center align-items-center general-container">
 
         <!-- Ricerca geografica -->
-        <div class="input-container  p-3 rounded-3 shadow">
-          <h3 class="text-color">Ricerca una località</h3>
+        <div class="input-container position-relative p-3 rounded-3 shadow">
+          <h3 class="text-color">Cerca una località</h3>
 
           <div class="d-flex justify-content-between">
             <div class="w-100">
               <input class="form-control input-indirizzo" type="text" v-model="location"
-                placeholder="Inserisci indirizzo o città" @input="getAddressSuggestions">
-              <ul class="list-group mt-2" v-if="addressSuggestions.length > 0">
-                <li class="list-group-item list-group-item-action" style="cursor: pointer;"
+                placeholder="Inserisci un indirizzo o una città" @input="getAddressSuggestions">
+              <ul class="list-group position-absolute" v-if="addressSuggestions.length > 0">
+                <li class="list-group-item list-group-item-action lista-indirizzi" style="cursor: pointer;"
                   v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
                   {{ address }}
                 </li>
@@ -283,6 +283,13 @@ export default {
       .input-indirizzo {
         height: 2.5rem;
         margin-top: 0.9rem;
+
+
+      }
+
+      .lista-indirizzi {
+        width: 30rem;
+        max-height: 5rem;
       }
 
       .btn-color {
