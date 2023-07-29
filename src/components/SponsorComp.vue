@@ -48,31 +48,32 @@ export default {
 </script>
 <template>
 
-    <div class="container">
+    <div class="container carosello">
 
         <h3>Appartamenti in evidenza</h3>
 
         <Carousel id="activeClasses" :itemsToShow="3.95" :wrapAround="true" :transition="500">
             <Slide class="carousel__slide" v-for="(slide, index) in apartments" :key="index">
-                <div class="carousel__item">
-                    <img class="card-img-top" :src="`${baseUrl}/storage/${slide.image}`" alt="Title">
-                    <div class="card-body">
-                        <RouterLink class="text-decoration-none"
+                <RouterLink class="carousel__item cliccabile"
                             :to="{ name: 'apartment', params: { slug: slide.slug } }">
-                            <h5>{{ slide.title }}</h5>
-                        </RouterLink>
+                    <img class="card-img-top rounded-top" :src="`${baseUrl}/storage/${slide.image}`" alt="Title">
+                    <div class="card-body">
+                        <div class="testo-card"
+                            :to="{ name: 'apartment', params: { slug: slide.slug } }">
+                            <h4>{{ slide.title }}</h4>
+                        </div>
                         <p class="card-text">{{ slide.address }}</p>
-                        <p>Stanze: {{ slide.room }}</p>
-                        <p>Letti: {{ slide.bed }}</p>
-                        <p class="mb-0">Servizi:</p>
-                        <p class="d-flex flex-wrap">
+                        <p class="fst-italic">Stanze: {{ slide.room }}</p>
+                        <p class="fst-italic">Letti: {{ slide.bed }}</p>
+                        <p class="mb-1 fst-italic">Servizi:</p>
+                        <p class="d-flex flex-wrap justify-content-center">
                             <span v-for="amenity in slide.amenities" :key="amenity.id">
                                 <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
                                     style="height: 20px">
                             </span>
                         </p>
                     </div>
-                </div>
+                </RouterLink>
             </Slide>
 
             <template #addons>
@@ -83,51 +84,70 @@ export default {
     
     </div>
 
+    <div class="container">
+
+    </div>
+
 </template>
 
 <style lang="scss" scoped>
 
-.carousel__slide {
-  padding: 5px;
+@media screen and (min-width: 425px) {
+    
+    .carosello{
+        
+        .carousel__slide {
+            padding: 5px;
+            
+            .cliccabile{
+                border-radius: 10px;
+                background-color: rgba($color: #FFFFFF, $alpha: 0.6);
+                color: black;
+                text-decoration: none;
+                
+            }
+            
+        }
+        
+    }
+
+    .carousel__viewport {
+    perspective: 2000px;
+    }
+
+    .carousel__track {
+    transform-style: preserve-3d;
+    }
+
+    .carousel__slide--sliding {
+    transition: 0.5s;
+    }
+
+    .carousel__slide {
+    opacity: 0.9;
+    transform: rotateY(-20deg) scale(0.9);
+    }
+
+    .carousel__slide--active ~ .carousel__slide {
+    transform: rotateY(20deg) scale(0.9);
+    }
+
+    .carousel__slide--prev {
+    opacity: 1;
+    transform: rotateY(-10deg) scale(0.95);
+    }
+
+    .carousel__slide--next {
+    opacity: 1;
+    transform: rotateY(10deg) scale(0.95);
+    }
+
+    .carousel__slide--active {
+    opacity: 1;
+    transform: rotateY(0) scale(1.1);
+    }
+
 }
-
-.carousel__viewport {
-  perspective: 2000px;
-}
-
-.carousel__track {
-  transform-style: preserve-3d;
-}
-
-.carousel__slide--sliding {
-  transition: 0.5s;
-}
-
-.carousel__slide {
-  opacity: 0.9;
-  transform: rotateY(-20deg) scale(0.9);
-}
-
-.carousel__slide--active ~ .carousel__slide {
-  transform: rotateY(20deg) scale(0.9);
-}
-
-.carousel__slide--prev {
-  opacity: 1;
-  transform: rotateY(-10deg) scale(0.95);
-}
-
-.carousel__slide--next {
-  opacity: 1;
-  transform: rotateY(10deg) scale(0.95);
-}
-
-.carousel__slide--active {
-  opacity: 1;
-  transform: rotateY(0) scale(1.1);
-}
-
-
 
 
 .card-cont{
@@ -151,6 +171,9 @@ export default {
 
     @media screen and (max-width:425px) {
 
+        .carosello{
+            display: none;
+        }
         .main-container{
             margin-left: 25px;
             .card-cont{
