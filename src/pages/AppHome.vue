@@ -79,7 +79,10 @@ export default {
           this.currentPage = res.data.apartments.current_page;
           this.lastPage = res.data.apartments.last_page;
         } else {
-          this.apartments = []
+          this.apartments = [];
+          this.$nextTick(() => {
+            this.$refs.results.scrollIntoView({ behavior: 'smooth' });
+          });
         }
       });
     }
@@ -127,7 +130,7 @@ export default {
 
     </div>
 
-    <div class="mt-3 container-card">
+    <div ref="results" class="mt-3 container-card">
 
       <div v-if="searched && apartments.length" class="my-3">
         Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
