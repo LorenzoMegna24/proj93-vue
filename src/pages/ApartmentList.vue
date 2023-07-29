@@ -354,6 +354,7 @@ p {
 }
 
 
+
 @media screen and (min-width: 426px) {
   .main-container {
     .input-container {
