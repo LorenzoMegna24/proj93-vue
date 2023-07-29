@@ -109,7 +109,7 @@ export default {
 </script>
 
 <template>
-  <main class="main-container mt-4 pt-4">
+  <main class="main-container">
 
     <div>
 
@@ -118,7 +118,7 @@ export default {
       <div class=" d-flex justify-content-center align-items-center general-container">
 
         <!-- Ricerca geografica -->
-        <div class="input-container  p-3 rounded-3 shadow ms-3">
+        <div class="input-container  p-3 rounded-3 shadow">
           <h3 class="text-color">Ricerca una località</h3>
 
           <div class="d-flex justify-content-between">
@@ -235,7 +235,7 @@ export default {
       </div>
 
 
-      <div class="d-flex justify-content-center py-2">
+      <div class="d-flex justify-content-center">
         <nav v-if="apartments.length > 0" aria-label="Page navigation">
           <ul class="pagination">
             <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
@@ -272,7 +272,7 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 80vh;
+    height: 90vh;
 
     .input-container {
       background-color: rgba($color: #FFFFFF, $alpha: 0.9);

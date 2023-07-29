@@ -53,6 +53,7 @@ export default {
 nav {
     position: relative;
     margin-bottom: 0;
+    height: 10vh;
 }
 
 a:hover {
