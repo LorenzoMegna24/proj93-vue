@@ -1,10 +1,12 @@
 <script>
 import axios from 'axios';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
     name: "MessageComp",
     components: {
-
+        Loading
     },
     props: {
         apartment_id: {
@@ -24,8 +26,8 @@ export default {
             content: '',
             baseUrl: 'http://127.0.0.1:8000',
             success: false,
-            errors: {}
-
+            errors: {},
+            loading: false
         }
     },
     methods: {
@@ -51,6 +53,10 @@ export default {
             if (Object.keys(this.errors).length > 0) {
                 return;
             }
+
+            // Mostra il loader
+            this.loading = true;
+
             const data = {
                 apartment_id: this.apartment_id,
                 name: this.name,
@@ -60,6 +66,9 @@ export default {
             }
             console.log(data);
             axios.post(`${this.baseUrl}/api/messages`, data).then(res => {
+                // Nascondi il loader
+                this.loading = false;
+
                 this.success = res.data.success
                 if (this.success) {
                     this.name = '';
@@ -75,10 +84,11 @@ export default {
 
 }
 </script>
+
 <template>
     <div class="d-flex justify-content-center mt-4">
         <!-- Invio messaggio al proprietario dell'appartamento -->
-        <form class="contenitore p-3 my-4 w-75 border rounded-3" @submit.prevent="sendMessage()">
+        <form v-if="!success" class="contenitore p-3 my-4 w-75 border rounded-3" @submit.prevent="sendMessage()">
             <h5>Contatta il proprietario</h5>
             <div class="mb-3">
                 <label for="InputName" class="form-label">Nome *</label>
@@ -115,21 +125,8 @@ export default {
 
         </form>
 
-        <div class="modal" tabindex="-1" :class="{ show: success }">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Conferma invio del messaggio</h5>
-                        <button type="button" class="btn-close" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Il messaggio è stato inviato correttamente.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="success = false">Close</button>
-                    </div>
-                </div>
-            </div>
+        <div v-if="success" class="alert alert-success mt-3" role="alert">
+            <i class="fa-solid fa-check"></i> Il messaggio è stato inviato correttamente.
         </div>
     </div>
 </template>
