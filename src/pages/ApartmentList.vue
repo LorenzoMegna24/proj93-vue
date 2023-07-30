@@ -121,27 +121,47 @@ export default {
         <div class="input-container position-relative p-3 rounded-3 shadow">
           <h3 class="text-color">Cerca una località</h3>
 
-          <div class="d-flex justify-content-between">
-            <div class="w-100">
-              <input class="form-control input-indirizzo" type="text" v-model="location"
-                placeholder="Inserisci un indirizzo o una città" @input="getAddressSuggestions">
-              <ul class="list-group position-absolute" v-if="addressSuggestions.length > 0">
-                <li class="list-group-item list-group-item-action lista-indirizzi" style="cursor: pointer;"
-                  v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
-                  {{ address }}
-                </li>
-              </ul>
-            </div>
+          <div class="row">
+            <div class="">
+              <div class="w-100">
+                <input class="form-control input-indirizzo border-black" type="text" v-model="location"
+                  placeholder="Inserisci un indirizzo o una città" @input="getAddressSuggestions">
+                <ul class="list-group position-absolute" v-if="addressSuggestions.length > 0">
+                  <li class="list-group-item list-group-item-action lista-indirizzi" style="cursor: pointer;"
+                    v-for="(address, index) in addressSuggestions" :key="index" @click="selectAddress(address)">
+                    {{ address }}
+                  </li>
+                </ul>
+              </div>
             <div>
-              <button @click="searchApartments" class="btn mt-3 btn-color ms-1">Cerca</button>
+              <h4 class="mt-2">Servizi</h4>
             </div>
+            <div class="">
+              <div class="form-check d-flex flex-wrap">
+                <div class="form-check-label me-5 mb-3 d-flex align-items-center" v-for="(elem, index) in amenities"
+                  :key="index" for="flexCheckDefault">
+                  <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
+                  <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
+                  <p class="mb-0 ms-2">{{ elem.name }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-2">
+              <h4>Numero minimo di stanze</h4>
+              <input class="form-control border-black" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
+            </div>
+            <div class="mt-2">
+              <h4>Posti letto</h4>
+              <input class="form-control border-black" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
+            </div>
+            <div class="mt-2">
+              <h4 for="radius-range">Raggio di ricerca:</h4>
+              <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
+              <div>{{ selectedRadius }} km</div>
+            </div>
+            <button @click="searchApartments" class="btn btn-primary">Cerca</button>
           </div>
-
-          <a class="btn mt-3 btn-color" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-            aria-controls="offcanvasExample">
-            Aggiungi Filtri
-          </a>
-
+            </div>
         </div>
       </div>
 
@@ -149,35 +169,6 @@ export default {
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filtri</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <div>
-            <h4>Servizi</h4>
-          </div>
-          <div class="mt-3">
-            <div class="form-check d-flex flex-column" style="max-height: 350px; min-height: 250px; overflow-y: scroll;">
-              <div class="form-check-label me-5 mb-2 d-flex align-items-center" v-for="(elem, index) in amenities"
-                :key="index" for="flexCheckDefault">
-                <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
-                <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
-                <p class="mb-0 ms-2">{{ elem.name }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="my-4">
-            <h4>Numero minimo di stanze</h4>
-            <input class="form-control" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
-          </div>
-          <div class="my-4">
-            <h4>Posti letto</h4>
-            <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
-          </div>
-          <div class="my-4">
-            <h4 for="radius-range">Raggio di ricerca:</h4>
-            <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
-            <div>{{ selectedRadius }} km</div>
-          </div>
-          <button @click="searchApartments" class="btn btn-primary">Cerca</button>
         </div>
 
       </div>
@@ -276,8 +267,8 @@ export default {
     height: 90vh;
 
     .input-container {
-      background-color: rgba($color: #FFFFFF, $alpha: 0.9);
-      color: #2382F7;
+      background-color: rgba($color: #FFFFFF, $alpha: 0.8);
+      color: #1557C0;
 
 
 
