@@ -39,7 +39,6 @@ export default {
     searchApartments() {
       this.getApartments(1);
       this.searched = true;
-      this.$refs.results.scrollIntoView({ behavior: 'smooth' });
     },
     getAddressSuggestions() {
       if (this.location) {

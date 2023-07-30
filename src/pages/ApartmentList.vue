@@ -208,11 +208,11 @@ export default {
               <RouterLink class="text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
 
                 <div class="card single-card border-0 shadow">
-                  <div class="container-img-top rounded-3">
+                  <div class="container-img-top rounded-top-3">
                     <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
                   </div>
-                  <div class="card-body">
-
+                  <div class="card-body rounded-bottom-3" v-bind:class="{ 'sponsored': elem.sponsored_order === 0 }">
+                    <div v-if="elem.sponsored_order === 0" class="sponsored-label">Consigliato</div>
                     <h5>{{ elem.title }}</h5>
                     <p class="card-text">{{ elem.address }}</p>
                     <p><strong>Distanza:</strong> {{ elem.distance.toFixed(2) }} km</p>
@@ -317,33 +317,56 @@ export default {
       color: #2382F7;
     }
 
+    .sponsored {
+      border: 2px solid #2382F7;
+
+      .sponsored-label {
+        border-radius: 10px;
+        position: absolute;
+        bottom: 55px;
+        right: 10px;
+        background-color: #2382F7;
+        color: white;
+        padding: 5px 10px;
+        font-size: 12px;
+        text-transform: uppercase;
+        transform-origin: 0 0;
+        text-align: center;
+        width: 110px;
+        font-weight: bolder;
+      }
+    }
+
     .single-card {
       height: 34rem;
       background-color: rgba($color: #FFFFFF, $alpha: 0.6);
 
-      h5 {
-        color: #2382F7;
-      }
 
-      .container-img-top {
-        overflow: hidden;
-      }
+    }
 
-      .card-img-top {
-        height: 18rem;
-        transition: transform 0.3s ease;
+    h5 {
+      color: #2382F7;
+    }
 
-        &:hover {
-          transform: scale(1.1);
-        }
-      }
+    .container-img-top {
+      overflow: hidden;
+    }
 
-      .card-text {
-        font-style: oblique;
+    .card-img-top {
+      height: 18rem;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
       }
+    }
+
+    .card-text {
+      font-style: oblique;
     }
   }
 }
+
 
 .offcanvas-header {
   background-color: #E8F3FE;
