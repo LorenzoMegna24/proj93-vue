@@ -188,11 +188,12 @@ export default {
       <div ref="results" class="big-container" v-if="searched">
         <div class="container-fluid container-cards pb-3">
 
-          <div class="row mt-5">
+          <div v-if="freeformAddress" class="mt-5 text-km pb-3 alert alert-primary w-25">
+            Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
+          </div>
 
-            <div v-if="freeformAddress" class="mb-2 text-km pb-3">
-              Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
-            </div>
+          <div class="row">
+
 
 
 
