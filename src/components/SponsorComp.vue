@@ -49,7 +49,7 @@ export default {
 <template>
     <div class="container carosello py-4">
 
-        <h3 class="my-2">Appartamenti in evidenza</h3>
+        <h3 class="my-2">Alloggi in evidenza</h3>
 
         <Carousel id="activeClasses" :autoplay="2000" :itemsToShow="3.95" :wrapAround="true" :transition="500">
             <Slide class="carousel__slide" v-for="(slide, index) in apartments" :key="index">
@@ -85,7 +85,7 @@ export default {
 
         <div class="main-container">
 
-            <h3 class="my-2">Appartamenti in evidenza</h3>
+            <h3 class="my-2">Alloggi in evidenza</h3>
             <!-- card appartamenti in evidenza -->
             <div class="col-3 p-2" v-for="(elem, index) in apartments" :key="index">
 
