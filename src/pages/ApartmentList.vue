@@ -1,5 +1,7 @@
 <script>
 import axios from 'axios';
+import FooterComp from '../components/FooterComp.vue';
+
 
 export default {
   name: 'ApartmentList',
@@ -18,6 +20,9 @@ export default {
       selectedRadius: '20',
       searched: false,
     }
+  },
+  components:{
+    FooterComp
   },
   mounted() {
     this.getAmenities();
@@ -136,7 +141,8 @@ export default {
               <div>
                 <h4 class="mt-2">Servizi</h4>
               </div>
-              <div class="">
+              <div class="servizi overflow-auto">
+                <!-- ciclo servizi -->
                 <div class="form-check d-flex flex-wrap">
                   <div class="form-check-label me-5 mb-3 d-flex align-items-center" v-for="(elem, index) in amenities"
                     :key="index" for="flexCheckDefault">
@@ -250,6 +256,8 @@ export default {
         </nav>
       </div>
 
+      <FooterComp></FooterComp>
+
     </div>
 
   </main>
@@ -273,6 +281,9 @@ export default {
       background-color: rgba($color: #FFFFFF, $alpha: 0.8);
       color: #1557C0;
 
+      .servizi{
+        max-height: 409px;
+      }
 
       .input-indirizzo {
         height: 2.5rem;
@@ -371,6 +382,7 @@ p {
 
 @media screen and (max-width: 425px) {
   .main-container {
+    height: 50vh;
     .input-container {
       width: 75%;
     }

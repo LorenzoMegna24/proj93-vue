@@ -1,6 +1,7 @@
 <script >
 import axios from 'axios';
 import SponsorComp from '../components/SponsorComp.vue';
+import FooterComp from '../components/FooterComp.vue';
 import { RouterLink } from 'vue-router';
 
 export default {
@@ -8,7 +9,8 @@ export default {
 
   components: {
     SponsorComp,
-    RouterLink
+    RouterLink,
+    FooterComp
   },
   data() {
     return {
@@ -329,6 +331,8 @@ export default {
     <div class="sponsor">
       <SponsorComp />
     </div>
+
+    <FooterComp></FooterComp>
 
   </section>
 </template>
