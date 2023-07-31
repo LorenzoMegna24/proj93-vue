@@ -80,13 +80,43 @@ export default {
 
     </div>
 
-    <div class="container">
+    
+    <div class="container card-section">
+
+        <div class="main-container">
+            <!-- card appartamenti in evidenza -->
+            <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
+                
+                <RouterLink class="card card-cont text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
+                    <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
+                    <div class="card-body">
+                        <h4>{{ elem.title }}</h4>
+                        <p class="card-text">{{ elem.address }}</p>
+                        <p>Stanze: {{ elem.room }}</p>
+                        <p>Letti: {{ elem.bed }}</p>
+                        <p class="mb-0">Servizi:</p>
+                        <p class="d-flex flex-wrap">
+                            <span v-for="amenity in elem.amenities" :key="amenity.id">
+                                <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
+                                style="height: 20px">
+                            </span>
+                        </p>
+                    </div>
+                </RouterLink>
+            </div>
+
+        </div>
 
     </div>
+
 </template>
 
 <style lang="scss" scoped>
 @media screen and (min-width: 425px) {
+
+    .card-section{
+        display: none;
+    }
 
     .carosello {
 
@@ -99,8 +129,17 @@ export default {
                 color: black;
                 text-decoration: none;
 
+                img{
+                    max-width: fit-content;
+                    height: 200px;
+                }
+
             }
 
+        }
+
+        ol,ul{
+            padding-left: 0;
         }
 
     }
@@ -174,10 +213,7 @@ export default {
 
         .card-cont {
             flex-direction: column;
-
-            .card {
-                width: 80vw;
-            }
+            width: 80vw;
         }
 
     }
