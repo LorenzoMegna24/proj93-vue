@@ -24,7 +24,7 @@ export default {
 
             <div class="row">
 
-                <div class="contact-info d-flex justify-content-center col-4 mb-3">
+                <div class="contact-info d-flex justify-content-center col-lg-4 col-sm-4 col-12 mb-3">
                     <div>
                         <h4 class="pb-2">Contattaci</h4>
                         <p><strong>Email:</strong> boolbnb@gmail.com</p>
@@ -33,7 +33,7 @@ export default {
                     </div>
                 </div>
 
-                <div class="social-links col-4 d-flex justify-content-center">
+                <div class="social-links col-lg-4 col-sm-4 col-12 d-flex justify-content-center">
                     <div>
                         <h4 class="mb-3">Seguici</h4>
                         <span class="me-2">
@@ -48,7 +48,7 @@ export default {
                     </div>
                 </div>
 
-                <div class="site-links col-4 d-flex justify-content-center">
+                <div class="site-links col-lg-4 col-sm-4 col-12 d-flex justify-content-center">
                     <div>
                         <h4 class="mb-3">Naviga</h4>
                         <ul>
@@ -85,6 +85,10 @@ export default {
 .footer-content {
     background-image: linear-gradient(to bottom, #e8f3fe, #f0f5ff, #f6f8ff, #fbfbff, #ffffff);
     color: rgba($color: #000000, $alpha: 0.8);
+    position: sticky;
+    bottom: 0;
+    right: 0;
+    left: 0;
 
     .contact-info {
 
@@ -118,6 +122,26 @@ export default {
     .footer-signs {
         p {
             font-size: 0.8rem;
+        }
+    }
+}
+
+
+@media screen and (max-width: 576px) {
+    .footer-content {
+        .contact-info {
+            justify-content: start !important;
+            margin: 0.3rem 0 1.2rem 0;
+        }
+
+        .social-links {
+            justify-content: start !important;
+            margin: 1.2rem 0;
+        }
+
+        .site-links {
+            justify-content: start !important;
+            margin: 1.2rem 0;
         }
     }
 }

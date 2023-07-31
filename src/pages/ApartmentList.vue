@@ -133,35 +133,38 @@ export default {
                   </li>
                 </ul>
               </div>
-            <div>
-              <h4 class="mt-2">Servizi</h4>
-            </div>
-            <div class="">
-              <div class="form-check d-flex flex-wrap">
-                <div class="form-check-label me-5 mb-3 d-flex align-items-center" v-for="(elem, index) in amenities"
-                  :key="index" for="flexCheckDefault">
-                  <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
-                  <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
-                  <p class="mb-0 ms-2">{{ elem.name }}</p>
+              <div>
+                <h4 class="mt-2">Servizi</h4>
+              </div>
+              <div class="">
+                <div class="form-check d-flex flex-wrap">
+                  <div class="form-check-label me-5 mb-3 d-flex align-items-center" v-for="(elem, index) in amenities"
+                    :key="index" for="flexCheckDefault">
+                    <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities"
+                      id="">
+                    <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
+                    <p class="mb-0 ms-2">{{ elem.name }}</p>
+                  </div>
                 </div>
               </div>
+              <div class="mt-2">
+                <h4>Numero minimo di stanze</h4>
+                <input class="form-control border-black" type="number" v-model="minRooms" min="1" max="20"
+                  style="width: 100px;">
+              </div>
+              <div class="mt-2">
+                <h4>Posti letto</h4>
+                <input class="form-control border-black" type="number" v-model="minBeds" min="1" max="20"
+                  style="width: 100px;">
+              </div>
+              <div class="mt-2">
+                <h4 for="radius-range">Raggio di ricerca:</h4>
+                <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
+                <div>{{ selectedRadius }} km</div>
+              </div>
+              <button @click="searchApartments" class="btn btn-primary">Cerca</button>
             </div>
-            <div class="mt-2">
-              <h4>Numero minimo di stanze</h4>
-              <input class="form-control border-black" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
-            </div>
-            <div class="mt-2">
-              <h4>Posti letto</h4>
-              <input class="form-control border-black" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
-            </div>
-            <div class="mt-2">
-              <h4 for="radius-range">Raggio di ricerca:</h4>
-              <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
-              <div>{{ selectedRadius }} km</div>
-            </div>
-            <button @click="searchApartments" class="btn btn-primary">Cerca</button>
           </div>
-            </div>
         </div>
       </div>
 
@@ -269,7 +272,6 @@ export default {
     .input-container {
       background-color: rgba($color: #FFFFFF, $alpha: 0.8);
       color: #1557C0;
-
 
 
       .input-indirizzo {
