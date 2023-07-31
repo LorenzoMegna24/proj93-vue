@@ -39,6 +39,7 @@ export default {
     searchApartments() {
       this.getApartments(1);
       this.searched = true;
+      this.hideOffcanvas();
     },
     getAddressSuggestions() {
       if (this.location) {
@@ -115,6 +116,11 @@ export default {
         this.amenities = res.data.amenities
       })
     },
+    hideOffcanvas() {
+      let offcanvasElement = document.getElementById('offcanvasExample');
+      let offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+      offcanvasInstance.hide();
+    }
   }
 
 }
@@ -162,7 +168,7 @@ export default {
 
     <div ref="results" class="container d-flex" v-if="searched">
 
-      <div class="col-4 filtri p-3 mt-3 mb-5 rounded">
+      <div class="col-4 filtri p-3 mt-3 mb-5 rounded d-none d-md-block">
         <div>
           <h5>Filtri</h5>
         </div>
@@ -197,7 +203,51 @@ export default {
         </div>
       </div>
 
-      <div class="mt-3 container-card col-8">
+      <!-- Mostra il componente Offcanvas solo su schermi più piccoli -->
+      <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filtri</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <h4>Servizi</h4>
+          </div>
+          <div class="mt-3">
+            <div class="form-check d-flex flex-column" style="max-height: 350px; min-height: 250px; overflow-y: scroll;">
+              <div class="form-check-label me-5 mb-2 d-flex align-items-center" v-for="(elem, index) in amenities"
+                :key="index" for="flexCheckDefault">
+                <input class="form-check-input me-2" type="checkbox" :value="elem.id" v-model="selectedAmenities" id="">
+                <img :src="`${baseUrl}/storage/${elem.image}`" :alt="elem.name" style="height: 30px;">
+                <p class="mb-0 ms-2">{{ elem.name }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="my-4">
+            <h4>Numero minimo di stanze</h4>
+            <input class="form-control" type="number" v-model="minRooms" min="1" max="20" style="width: 100px;">
+          </div>
+          <div class="my-4">
+            <h4>Posti letto</h4>
+            <input class="form-control" type="number" v-model="minBeds" min="1" max="20" style="width: 100px;">
+          </div>
+          <div class="my-4">
+            <h4 for="radius-range">Raggio di ricerca:</h4>
+            <input id="radius-range" type="range" min="1" max="20" step="1" v-model="selectedRadius">
+            <div>{{ selectedRadius }} km</div>
+          </div>
+          <button @click="searchApartments(); hideOffcanvas()" class="btn btn-primary">Aggiorna</button>
+
+        </div>
+      </div>
+
+      <div class="mt-3 container-card col-12 col-md-8">
+        <button class="btn btn-primary d-md-none d-block" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          Aggiungi filtri
+        </button>
+
 
         <div v-if="searched && apartments.length" class="text-km">
           Risultati per {{ freeformAddress }} nel raggio di {{ selectedRadius }}Km:
@@ -207,7 +257,7 @@ export default {
           Non ci sono appartamenti nella località selezionata
         </div>
 
-        <div class="my-3  w-100" v-for="(elem, index) in apartments" :key="index">
+        <div class="my-3  w-100" v-for="(    elem, index    ) in     apartments    " :key="index">
           <div class="d-flex single-card w-100 rounded-3 shadow"
             v-bind:class="{ 'sponsored': elem.sponsored_order === 0 }">
 
@@ -233,11 +283,13 @@ export default {
               <p class="d-flex flex-wrap justify-content-between align-items-center my-3">
 
               <div>
-                <span v-for="amenity in elem.amenities" :key="amenity.id">
-                  <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
+                <span v-for="    amenity     in     elem.amenities    " :key="amenity.id">
+                  <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
+                    style="height: 20px">
                 </span>
               </div>
-              <RouterLink class="btn btn-primary" :to="{ name: 'apartment', params: { slug: elem.slug } }">
+              <RouterLink class="btn btn-primary mt-sm-2 mt-md-2 mt-lg-2"
+                :to="{ name: 'apartment', params: { slug: elem.slug } }">
                 Dettagli
               </RouterLink>
 
@@ -259,7 +311,8 @@ export default {
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="elem in lastPage" :key="elem">
+              <li class="page-item" :class="{ 'active': currentPage === elem }" v-for="    elem     in     lastPage    "
+                :key="elem">
                 <a class="page-link" @click.prevent="getApartments(elem)" href="#">{{ elem }}</a>
               </li>
               <li class="page-item" :class="{ 'disabled': currentPage === lastPage }">
@@ -317,7 +370,7 @@ section {
 
   .filtri {
     background-color: #FFFFFF;
-    height: 87vh;
+    max-height: 900px;
     position: sticky;
     top: 5px;
   }
