@@ -1,5 +1,4 @@
 <script >
-import FooterComp from './components/FooterComp.vue';
 import HeaderComp from './components/HeaderComp.vue';
 export default {
   data() {
@@ -9,7 +8,7 @@ export default {
   },
   components: {
     HeaderComp,
-    FooterComp
+
   },
   mounted() {
 
@@ -23,7 +22,6 @@ export default {
 <template>
   <HeaderComp></HeaderComp>
   <router-view></router-view>
-  <FooterComp></FooterComp>
 </template>
 
 <style lang="scss">
