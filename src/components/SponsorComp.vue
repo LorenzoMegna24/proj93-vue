@@ -81,9 +81,11 @@ export default {
     </div>
 
     
-    <div class="container card-section">
+    <div class="card-section">
 
         <div class="main-container">
+
+            <h3 class="my-2">Appartamenti in evidenza</h3>
             <!-- card appartamenti in evidenza -->
             <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
                 
@@ -112,7 +114,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@media screen and (min-width: 425px) {
+@media screen and (min-width: 769px) {
 
     .card-section{
         display: none;
@@ -202,14 +204,14 @@ export default {
     }
 }
 
-@media screen and (max-width:425px) {
+@media screen and (max-width: 768px) {
 
     .carosello {
         display: none;
     }
 
     .main-container {
-        margin-left: 25px;
+        margin-left: 10%;
 
         .card-cont {
             flex-direction: column;
