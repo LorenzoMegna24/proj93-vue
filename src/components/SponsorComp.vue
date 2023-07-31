@@ -80,16 +80,17 @@ export default {
 
     </div>
 
-    
+
     <div class="card-section">
 
         <div class="main-container">
 
             <h3 class="my-2">Appartamenti in evidenza</h3>
             <!-- card appartamenti in evidenza -->
-            <div class="col-3 m-2" v-for="(elem, index) in apartments" :key="index">
-                
-                <RouterLink class="card card-cont text-decoration-none" :to="{ name: 'apartment', params: { slug: elem.slug } }">
+            <div class="col-3 p-2" v-for="(elem, index) in apartments" :key="index">
+
+                <RouterLink class="card card-cont text-decoration-none"
+                    :to="{ name: 'apartment', params: { slug: elem.slug } }">
                     <img class="card-img-top" :src="`${baseUrl}/storage/${elem.image}`" alt="Title">
                     <div class="card-body">
                         <h4>{{ elem.title }}</h4>
@@ -100,7 +101,7 @@ export default {
                         <p class="d-flex flex-wrap">
                             <span v-for="amenity in elem.amenities" :key="amenity.id">
                                 <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
-                                style="height: 20px">
+                                    style="height: 20px">
                             </span>
                         </p>
                     </div>
@@ -110,13 +111,12 @@ export default {
         </div>
 
     </div>
-
 </template>
 
 <style lang="scss" scoped>
 @media screen and (min-width: 769px) {
 
-    .card-section{
+    .card-section {
         display: none;
     }
 
@@ -131,7 +131,7 @@ export default {
                 color: black;
                 text-decoration: none;
 
-                img{
+                img {
                     max-width: fit-content;
                     height: 200px;
                 }
@@ -140,7 +140,8 @@ export default {
 
         }
 
-        ol,ul{
+        ol,
+        ul {
             padding-left: 0;
         }
 
