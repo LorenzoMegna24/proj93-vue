@@ -192,7 +192,7 @@ export default {
 
 
             <div v-if="searched && apartments.length === 0" class="text-center my-3">
-              Non ci sono appartamenti che corrispondono ai filtri selezionati
+              Non ci sono b&b che corrispondono ai filtri selezionati
             </div>
 
 

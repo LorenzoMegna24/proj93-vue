@@ -254,7 +254,7 @@ export default {
         </div>
 
         <div v-if="searched && apartments.length === 0" class="text-center my-3">
-          Non ci sono appartamenti nella località selezionata
+          Non ci sono b&b nella località selezionata
         </div>
 
         <div class="my-3  w-100" v-for="(    elem, index    ) in     apartments    " :key="index">

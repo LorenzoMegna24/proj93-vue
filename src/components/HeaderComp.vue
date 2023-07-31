@@ -41,7 +41,7 @@ export default {
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="http://127.0.0.1:8000/login">Accedi</a></li>
                         <li><a class="dropdown-item" href="http://127.0.0.1:8000/register">Registrati</a></li>
-                        <li> <a class="dropdown-item" href="http://127.0.0.1:8000/profile/apartments">Appartamenti</a></li>
+                        <li> <a class="dropdown-item" href="http://127.0.0.1:8000/profile/apartments">Le tue proprietà</a></li>
                         <li> <a class="dropdown-item" href="http://127.0.0.1:8000/profile">Profilo</a></li>
                     </ul>
                 </div>
