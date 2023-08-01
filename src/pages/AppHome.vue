@@ -286,8 +286,7 @@ export default {
 
               <div>
                 <span v-for="    amenity     in     elem.amenities    " :key="amenity.id">
-                  <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name"
-                    style="height: 20px">
+                  <img class="me-2" :src="`${baseUrl}/storage/${amenity.image}`" :alt="amenity.name" style="height: 20px">
                 </span>
               </div>
               <RouterLink class="btn btn-primary mt-sm-2 mt-md-2 mt-lg-2"
@@ -367,6 +366,7 @@ section {
       .lista-indirizzi {
         width: 30rem;
         max-height: 5rem;
+        z-index: 1;
       }
     }
 

@@ -295,6 +295,7 @@ export default {
       .lista-indirizzi {
         width: 30rem;
         max-height: 5rem;
+        z-index: 1;
       }
 
       .btn-color {
@@ -386,7 +387,11 @@ p {
 
     .input-container {
       width: 75%;
+
+
     }
+
+
   }
 }
 
@@ -402,13 +407,16 @@ p {
       padding: 45px 0;
     }
   }
+
 }
+
 
 
 @media screen and (min-width: 1000px) {
   .main-container {
     .input-container {
       width: 50%;
+
     }
   }
 }
