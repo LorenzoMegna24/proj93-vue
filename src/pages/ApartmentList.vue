@@ -397,6 +397,10 @@ p {
     .input-container {
       width: 60%;
     }
+
+    .general-container {
+      padding: 45px 0;
+    }
   }
 }
 
