@@ -21,7 +21,7 @@ export default {
       searched: false,
     }
   },
-  components:{
+  components: {
     FooterComp
   },
   mounted() {
@@ -275,13 +275,13 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 90vh;
+    padding: 25px 0;
 
     .input-container {
       background-color: rgba($color: #FFFFFF, $alpha: 0.8);
       color: #1557C0;
 
-      .servizi{
+      .servizi {
         max-height: 409px;
       }
 
@@ -383,6 +383,7 @@ p {
 @media screen and (max-width: 425px) {
   .main-container {
     height: 50vh;
+
     .input-container {
       width: 75%;
     }
